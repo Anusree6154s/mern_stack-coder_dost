@@ -1,0 +1,23 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.button-cart {
+  border: solid rgb(128, 79, 0) 1px;
+  background-color: rgb(220, 216, 210);
+  padding: 10px;
+  margin: 5px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 800;
+  color: rgb(128, 81, 0);
+}
+
