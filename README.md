@@ -1,9 +1,9 @@
 # redux-coder_dost
 # Redux JS MasterClass 
 
-[my own explanation](C:\Users\ANUSREE\OneDrive\Documents\Coding\Frontend Dev\Redux - Coder Dost.docx)
+Link: [my own explanation](https://1drv.ms/w/s!Amp2PP8sH5SVgmIicRJKtO-EZ1gl)
 
-my own explanation: "C:\Users\ANUSREE\OneDrive\Documents\Coding\Frontend Dev\Redux - Coder Dost.docx"
+on My Computer: my own explanation: "C:\Users\ANUSREE\OneDrive\Documents\Coding\Frontend Dev\Redux - Coder Dost.docx"
   
 
 Hi, This is course page of **CoderDost Youtube Channel** Redux JS 2023 Course [Video Link ](TODO),
