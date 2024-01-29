@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export function fetchProducts() {
-  return axios.get('http://localhost:3000/products')
+  return axios.get('https://react-redux-database-json-file.onrender.com/products')
 }
