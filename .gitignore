@@ -1,0 +1,61 @@
+# Node.js
+node_modules/
+
+# Dependency directories
+# These are directories that are created by package managers
+# See https://docs.npmjs.com/misc/faq#should-i-check-my-node_modules-folder-into-git
+# See https://yarnpkg.com/lang/en/docs/yarn-lock/
+# See https://github.com/pnpm/pnpm/blob/master/docs/FAQ.md#should-i-check-my-pnpm-lock-file-into-git
+**/node_modules/
+**/npm-debug.log
+**/yarn-error.log
+**/pnpm-lock.yaml
+
+# Compiled files
+build/
+dist/
+
+# Logs
+logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+
+# Compiled binary addons
+node_modules/.bin/
+node_modules/*.md
+node_modules/*.cmd
+node_modules/*.bat
+node_modules/*.wasm
+
+# Local environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# .env*.local files should be ignored by default
+# but other environment specific files should be ignored as well
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Jest
+coverage/
+
+# Visual Studio Code
+.vscode/
+
+# Windows
+Desktop.ini
+Thumbs.db
+
+# macOS
+.DS_Store
