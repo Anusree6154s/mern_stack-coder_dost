@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './PlayButton.css'
+import '../styles/PlayButton.css'
 
 /* Method 1 
 function PlayButton({ children, name, onPause }) {
@@ -12,7 +12,7 @@ function PlayButton({ children, name, onPause }) {
 */
 
 /*METHOD 2 (useSatae) */
-function PlayButton({ children, name, onPause }) {
+function PlayButton() {
     const [playing, setPlaying] = useState(false)
     const handleClick = () => {
         setPlaying(!playing)

@@ -1,5 +1,4 @@
-
-import './Video.css'
+import '../styles/Video.css'
 import PlayButton from './Playbutton';
 
 function Video({ id, title, channel = 'Coder Dost', views, time, verified }) {

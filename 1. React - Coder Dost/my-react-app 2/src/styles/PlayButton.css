@@ -5,7 +5,8 @@ button {
   border-radius: 1em;
   color: white;
   cursor: pointer;
-  width: fit-content;}
+  width: fit-content;
+}
 
 button:hover {
   background-color: grey;
