@@ -1,13 +1,18 @@
 import { useContext } from 'react';
 import '../styles/Video.css'
 import PlayButton from './Playbutton';
-import ThemeContext from '../context/ThemeContext';
+import ThemeContext from '../Context API/Contexts/ThemeContext';
+import { del } from '../reducers/videoReducer';
+import DispatchContext from '../Context API/Contexts/DispatchContext';
+import FindVideoContext from '../Context API/Contexts/FindVideoContext';
 
-function Video({ id, title, channel = 'Coder Dost', views, time, verified, deleteVideo, findVideo }) {
-    const theme = useContext(ThemeContext)
+function Video({ id, title, channel = 'Coder Dost', views, time, verified }) {
+    const { theme } = useContext(ThemeContext)
+    const { dispatch } = useContext(DispatchContext)
+    const { findVideo } = useContext(FindVideoContext)
 
     const handleClick = (e) => {
-        e.target.innerText === 'X' ? deleteVideo(e) : findVideo(e)
+        e.target.innerText === 'X' ? dispatch(del(e)) : findVideo(e)
     }
 
     return (

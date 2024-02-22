@@ -1,9 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
+import ThemeContext from '../Context API/Contexts/ThemeContext';
+import DispatchContext from '../Context API/Contexts/DispatchContext';
+import { add, update } from '../reducers/videoReducer';
 import '../styles/AddVideo.css'
-import ThemeContext from '../context/ThemeContext';
+import FindVideoContext from '../Context API/Contexts/FindVideoContext';
 
 /*Controlled Input Example */
-function AddVideo({ addVideo, foundVideo, updateVideo }) {
+function AddVideo() {
+    const { theme } = useContext(ThemeContext)
+    const { dispatch } = useContext(DispatchContext)
+    const { foundVideo } = useContext(FindVideoContext)
 
     const initialState = {
         views: "500",
@@ -24,7 +30,7 @@ function AddVideo({ addVideo, foundVideo, updateVideo }) {
 
     function handleClick(e) {
         e.preventDefault()
-        e.target.innerText === 'Add Video' ? addVideo(newVideo) : updateVideo(newVideo)
+        e.target.innerText === 'Add Video' ? dispatch(add(newVideo)) : dispatch(update(newVideo))
         setNewVideo(initialState)
         e.target.innerText = 'Add Video'
     }
@@ -33,7 +39,6 @@ function AddVideo({ addVideo, foundVideo, updateVideo }) {
         foundVideo && setNewVideo(foundVideo)
     }, [foundVideo])
 
-    const theme = useContext(ThemeContext)
 
     return (
         <div>

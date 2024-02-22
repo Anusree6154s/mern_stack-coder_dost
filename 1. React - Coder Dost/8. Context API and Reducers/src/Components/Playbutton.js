@@ -1,6 +1,7 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import '../styles/PlayButton.css'
-import ThemeContext from '../context/ThemeContext'
+import ThemeContext from '../Context API/Contexts/ThemeContext'
+import useIsPLaying from '../Hooks/IsPlaying'
 
 /* Method 1 
 function PlayButton({ children, name, onPause }) {
@@ -14,12 +15,9 @@ function PlayButton({ children, name, onPause }) {
 
 /*METHOD 2 (useSatae) */
 function PlayButton() {
-    const [playing, setPlaying] = useState(false)
-    const handleClick = () => {
-        setPlaying(!playing)
-    }
-
+    const {playing, handleClick} = useIsPLaying()
     const theme = useContext(ThemeContext)
+    
     return (
         <button className={theme} onClick={handleClick}>{playing ? 'Pause' : 'Play'}</button>
     )

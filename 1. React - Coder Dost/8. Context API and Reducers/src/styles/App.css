@@ -1,7 +1,8 @@
 .App{
-    height: 100vh;
+    height: 1000vh;
     width: 100vw;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .dark{
