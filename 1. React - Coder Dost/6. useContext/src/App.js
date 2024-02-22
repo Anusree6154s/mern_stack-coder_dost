@@ -3,6 +3,7 @@ import './styles/App.css'
 import videos from './data/data';
 import AddVideo from './Components/AddVideo';
 import VideoList from './Components/VideoList';
+import ThemeContext from './context/ThemeContext';
 
 
 // Action types
@@ -53,13 +54,20 @@ function App() {
     setFoundVideo(videoArray.find(item => item.id === targetId))
   }
 
+  const [theme, setTheme] = useState('light')
+  const handleTheme = () => {
+    theme === 'light' ? setTheme('dark') : setTheme('light')
+  }
 
   return (
-    <div className="App">
-      <AddVideo addVideo={addVideo} foundVideo={foundVideo} updateVideo={updateVideo}></AddVideo>
-      <br />
-      <VideoList deleteVideo={deleteVideo} findVideo={findVideo} videoArray={videoArray}></VideoList>
-    </div>
+    <ThemeContext.Provider value={theme}>
+      <div className={`App ${theme}`}>
+        <button onClick={handleTheme}>Mode</button>
+        <AddVideo addVideo={addVideo} foundVideo={foundVideo} updateVideo={updateVideo}></AddVideo>
+        <br />
+        <VideoList deleteVideo={deleteVideo} findVideo={findVideo} videoArray={videoArray}></VideoList>
+      </div>
+    </ThemeContext.Provider>
   );
 }
 export default App;

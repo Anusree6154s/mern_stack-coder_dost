@@ -1,13 +1,21 @@
 # useReducer
 
+<h2 style='color:#416D19'>Comparing useState and useReducer</h2>
+
+- const [state, setState] = useState(initialState)
+- const [state, dispatch] = useReducer(reducerFunctionName, initialState)
+
+Comparing both we get to kknow that dispatch acts just like setState does. 
+useReducer is used when we use the same useState in more than one place
+
 <h2 style='color:#416D19'>Syntax</h2>
 
 ```javascript
-import React, { useReducer } from 'react';
+import React, { useReducer } from "react";
 
 // Action types
-const INCREMENT = 'INCREMENT';
-const DECREMENT = 'DECREMENT';
+const INCREMENT = "INCREMENT";
+const DECREMENT = "DECREMENT";
 
 // Action creators
 const incrementAction = () => ({ type: INCREMENT });
@@ -30,7 +38,11 @@ const Counter = () => {
   const initialState = { count: 0 };
 
   // useReducer hook
-  const [state, dispatch] = useReducer(counterReducer, initialState, initializer);
+  const [state, dispatch] = useReducer(
+    counterReducer,
+    initialState,
+    initializer
+  );
 
   return (
     <div>
@@ -44,15 +56,14 @@ const Counter = () => {
 export default Counter;
 ```
 
-
 <h2 style='color:#416D19'>Example</h2>
 
 ```javascript
-import React, { useReducer } from 'react';
+import React, { useReducer } from "react";
 
 // Action types
-const INCREMENT = 'INCREMENT';
-const DECREMENT = 'DECREMENT';
+const INCREMENT = "INCREMENT";
+const DECREMENT = "DECREMENT";
 
 // Action creators
 const incrementAction = () => ({ type: INCREMENT });
@@ -75,9 +86,13 @@ const Counter = () => {
   const initialState = { count: 0 };
 
   // useReducer hook
-  const [state, dispatch] = useReducer(counterReducer, initialState, (initialState) => {
-    return { count: initialState.count * 2 }; // Custom initializer function
-  });
+  const [state, dispatch] = useReducer(
+    counterReducer,
+    initialState,
+    (initialState) => {
+      return { count: initialState.count * 2 }; // Custom initializer function
+    }
+  );
 
   return (
     <div>
@@ -89,4 +104,6 @@ const Counter = () => {
 };
 
 export default Counter;
+```
+
 

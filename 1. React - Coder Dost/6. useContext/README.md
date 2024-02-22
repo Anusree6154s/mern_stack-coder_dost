@@ -1,0 +1,1 @@
+useContext - for making stuff global
