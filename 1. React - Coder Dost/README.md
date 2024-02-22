@@ -12,7 +12,7 @@
 5. State, useState hook
 6. Forms, Event Objects, lifting state up, controlled/uncontrolled input
    - **Lifting State:**
-        - Passing the states [state, setState], via inside another function, as props to chldren components
+        - Passing the states [state, setState], via inside another function, as props to chldren components. As in not letting setState leave the parent component
         - Lifting state up involves passing state values and modifying functions as props from parent to child components.
         - Passing setState directly as a prop lets the child component modify the parent's state directly.
         - It's like letting a child directly change the parent's stuff, which is not how things usually work in React.
@@ -24,6 +24,7 @@
 
 7. CRUD operations, useEffect hook
 8. useReducers for State management
+   - **useReducer:** instead of redux as redux isnt built in with react
 9. Context API , useContext hook
 10. Context API with useReducers, Custom hooks
 11. useRef hook

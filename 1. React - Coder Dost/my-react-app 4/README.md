@@ -1,1 +1,0 @@
-Reducing the clutter in App.js and using only child components
