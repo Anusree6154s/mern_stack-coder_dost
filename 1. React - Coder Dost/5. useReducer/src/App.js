@@ -1,17 +1,41 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import './styles/App.css'
 import videos from './data/data';
 import AddVideo from './Components/AddVideo';
 import VideoList from './Components/VideoList';
+
+
+// Action types
+const ADD = 'add';
+
+// Action creators
+const add = (value) => ({ type: ADD, payload: value });
+
+// Reducer function
+const videoReducer = (state, action) => {
+  switch (action.type) {
+    case ADD:
+      return [...state, { ...action.payload, id: state.length + 1 }]
+    default:
+      return state;
+  }
+};
+
 
 function App() {
   let [videoArray, setVideoArray] = useState(videos)
   let [i, setI] = useState(4)
   let [foundVideo, setFoundVideo] = useState(null)
 
+  // Initial state
+  const initialState = videos;
+
+  // useReducer hook
+  const [state, dispatch] = useReducer(videoReducer, initialState);
+
+
   const addVideo = (video) => {
-    setVideoArray(prevItem => [...prevItem, { ...video, id: i }])
-    setI(item => item + 1)
+    dispatch(add(video))
   }
 
   const deleteVideo = (e) => {
@@ -19,7 +43,6 @@ function App() {
     let filteredArray = videoArray.filter(item => item.id !== targetId)
     setVideoArray(filteredArray)
   }
-
 
   const updateVideo = (e) => {
     const targetId = parseInt(e.target.id)
