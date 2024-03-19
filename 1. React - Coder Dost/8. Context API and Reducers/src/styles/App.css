@@ -1,0 +1,15 @@
+.App{
+    height: 1000vh;
+    width: 100vw;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.dark{
+  background-color: #515151;
+}
+
+.light{
+    background-color: #C7B7A3;
+}
+

@@ -1,0 +1,25 @@
+input{
+    border: solid transparent;
+    margin: 1em;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+  
+  button.dark{
+    background-color: black;
+    border: 1px solid yellow;
+    color: white;
+  }
+  
+  button.light{
+    background-color:#c1aa85 ;
+    border: 1px solid brown;
+    color: #6d1717;
+  }
+  
+  button:hover {
+    background-color: brown;
+    color: white;
+  }
+  

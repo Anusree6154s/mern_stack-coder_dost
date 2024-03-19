@@ -1,0 +1,42 @@
+{
+  "accounts": [
+    {
+      "name": "cara",
+      "id": 2
+    },
+    {
+      "name": "Astha",
+      "amount": 600,
+      "id": 3
+    },
+    {
+      "name": "tara",
+      "amount": "",
+      "id": 4
+    },
+    {
+      "name": "fara",
+      "amount": 200,
+      "id": 5
+    },
+    {
+      "name": "mona",
+      "id": 6
+    },
+    {
+      "name": "frn",
+      "amount": 300,
+      "id": 7
+    }
+  ],
+  "bonus": [
+    {
+      "id": 1,
+      "points": 1
+    },
+    {
+      "id": 2,
+      "points": 3
+    }
+  ]
+}
