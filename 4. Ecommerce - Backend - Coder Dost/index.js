@@ -28,7 +28,7 @@ var cookieParser = require('cookie-parser')
 
 
 const server = express()
-const uri = 'mongodb+srv://anilkumaranusree113:anilkumar113anusree@cluster0.epejqnj.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0'
+const uri = process.env.URI
 
 //jwt authentication
 const secretKey = process.env.SECRET_KEY;
