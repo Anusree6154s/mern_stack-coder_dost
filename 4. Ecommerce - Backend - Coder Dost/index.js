@@ -108,7 +108,7 @@ server.use('/cart', isAuth(), cartRouter.router)
 server.use('/orders', isAuth(), orderRouter.router)
 
 //payments
-const stripe = require("stripe")('sk_test_51OzsYKSEvg4ni96GkYVexqf52D7zciqsPOJFDsP1qFtobpnGYIZ9BmcEFtSHz0GAMrWmg9htwTOaa4jIfXQFxZ4o00F0YSuhfx');
+const stripe = require("stripe")(process.env.STRIPE);
 
 
 server.post("/create-payment-intent", async (req, res) => {
