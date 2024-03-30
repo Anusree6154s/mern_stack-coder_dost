@@ -4,12 +4,12 @@ const { Schema } = mongoose;
 
 const orderSchema = new Schema({
     items: { type: [Schema.Types.Mixed] },
-    totalAmount: { type: Number },
+    totalPrice: { type: Number },
     totalItems: { type: Number },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     paymentMethod: { type: String },
     status: { type: String, default: 'Pending' },
-    selectedAddress: { type: [Schema.Types.Mixed] },
+    selectedAddress: { type: Schema.Types.Mixed },
 })
 
 const virtual = orderSchema.virtual('id')

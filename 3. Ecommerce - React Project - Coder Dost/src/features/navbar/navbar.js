@@ -28,18 +28,12 @@ function classNames(...classes) {
 export default function NavBar({ children, name }) {
   const currentUser = useSelector(selectLoggedInUser)
 
-  // const userNavigation = currentUser.role === 'user' ? [
-  //   { name: 'Your Profile', link: '/profile' },
-  //   { name: 'My Orders', link: '/orders' },
-  //   { name: 'Sign out', link: '/logout' },
-  // ] : [
-  //   { name: 'Orders', link: '/admin/orders' },
-  //   { name: 'Sign out', link: '/logout' },
-  // ]
-
-  const userNavigation = [
+  const userNavigation = currentUser.role === 'user' ? [
     { name: 'Your Profile', link: '/profile' },
     { name: 'My Orders', link: '/orders' },
+    { name: 'Sign out', link: '/logout' },
+  ] : [
+    { name: 'Orders', link: '/admin/orders' },
     { name: 'Sign out', link: '/logout' },
   ]
 
@@ -52,7 +46,7 @@ export default function NavBar({ children, name }) {
             <>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
-                  <Link to='/'>
+                  <Link to={currentUser.role === 'user' ? '/' : '/admin'}>
                     <h1 className='text-white text-3xl flex gap-2 '>
                       <img className='h-10 w-100' src="/favicon2.ico" alt="" />
                     </h1>

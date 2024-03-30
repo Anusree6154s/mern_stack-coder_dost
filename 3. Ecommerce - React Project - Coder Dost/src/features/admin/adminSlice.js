@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchAllOrders } from './adminAPI';
 
 const initialState = {
-
   totalOrders: 0,
   status: 'idle',
 

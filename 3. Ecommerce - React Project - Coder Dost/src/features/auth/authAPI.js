@@ -7,30 +7,47 @@ export function createUser(userData) {
       headers: { 'content-type': 'application/json' }
     });
     const data = await response.json();
-    console.log('data: ', data)
     // TODO: In server we will only store some info (not password)
     resolve({ data });
   });
 }
 
 
-export function checkUser(loginInfo) {
+export function LoginUser(loginInfo) {
   return new Promise(async (resolve, reject) => {
     const email = loginInfo.email
     const password = loginInfo.password
-    const response = await fetch('http://localhost:8080/users/login?email=' + email)
-    const data = await response.json()
-    console.log(data)
-    if (Object.keys(data).length) {
-      password === data.password ? resolve({ data }) : reject('wrong credentials')
-    } else {
-      reject('user not found')
-    }
-  }
-  );
+      const response = await fetch('http://localhost:8080/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+        headers: { 'content-type': 'application/json' }
+      })
+      if (response.ok) {
+        const data = await response.json()
+        resolve({ data })
+      } else {
+        const error = await response.text();
+        reject(error)
+      }
+
+  });
+}
+
+export function checkAuth() {
+  return new Promise(async (resolve, reject) => {
+      const response = await fetch('http://localhost:8080/auth/check')
+      if (response.ok) {
+        const data = await response.json()
+        resolve({ data })
+      } else {
+        const error = await response.text();
+        reject(error)
+      }
+  });
 }
 
 export function updateUser(update) {
+  console.log("update: ", update)
   return new Promise(async (resolve) => {
     const response = await fetch('http://localhost:8080/users/user/' + update.id, {
       method: 'PATCH',

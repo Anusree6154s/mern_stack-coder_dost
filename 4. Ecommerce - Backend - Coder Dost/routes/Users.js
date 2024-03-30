@@ -1,10 +1,9 @@
 const express = require('express')
-const { fetchUserById, updateUser, loginUser } = require('../controller/User.js');
+const { fetchUserById, updateUser} = require('../controller/User.js');
 
 const router = express.Router()
 
-router.get('/user/:id', fetchUserById)
-    .get('/login', loginUser)
+router.get('/user', fetchUserById)
     .patch('/user/:id', updateUser)
 
 

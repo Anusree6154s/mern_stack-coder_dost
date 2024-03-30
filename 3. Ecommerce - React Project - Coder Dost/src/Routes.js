@@ -17,6 +17,7 @@ import AdminProductDetailPage from './pages/adminPages/AdminProductDetailPage';
 import AddProductFormPage from './pages/adminPages/AddProductFormPage';
 import EditProductFormPage from './pages/adminPages/EditProductFormPage';
 import AdminOrdersPage from './pages/adminPages/AdminOrdersPage';
+import StripeCheckout from './pages/StripeCheckout';
 
 export const router = createBrowserRouter([
   {
@@ -103,11 +104,16 @@ export const router = createBrowserRouter([
       <EditProductFormPage></EditProductFormPage>,
     </Protected>
   },
-  
   {
     path: "/admin/orders",
     element: <Protected>
       <AdminOrdersPage></AdminOrdersPage>,
+    </Protected>
+  },
+  {
+    path: "stripe-checkout/:id",
+    element: <Protected>
+      <StripeCheckout></StripeCheckout>,
     </Protected>
   },
 ]);

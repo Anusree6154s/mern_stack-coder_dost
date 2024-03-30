@@ -22,7 +22,6 @@ function AdminOrders() {
         const pagination = { _page: page }
         dispatch(fetchAllOrdersAsync({ sort, pagination }))
     }, [sort, page, editStatusIndex])
-    console.log(orders)
 
     const handleShow = () => {
     }
@@ -37,6 +36,8 @@ function AdminOrders() {
         sort._order === 'asc' ? setSort({ _sort: 'id', _order: 'desc' }) : setSort({ _sort: 'id', _order: 'asc' })
     }
 
+    console.log(orders)
+
     return (
         <div>
 
@@ -48,6 +49,7 @@ function AdminOrders() {
                             <table className="min-w-max w-full table-auto">
                                 <thead>
                                     <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                        <th className="py-3 px-6 text-center">Sr. No.</th>
                                         <th
                                             className="py-3 px-6 text-left flex gap-4 cursor-pointer"
                                             onClick={handleSort}>
@@ -59,6 +61,7 @@ function AdminOrders() {
                                         </th>
                                         <th className="py-3 px-6 text-left">Items</th>
                                         <th className="py-3 px-6 text-left">Total Amount</th>
+                                        <th className="py-3 px-6 text-left">Shipping Address</th>
                                         <th className="py-3 px-6 text-center">Status</th>
                                         <th className="py-3 px-6 text-center">Actions</th>
                                     </tr>
@@ -66,8 +69,12 @@ function AdminOrders() {
                                 <tbody className="text-gray-600 text-sm font-light">
                                     {orders && orders.map((order, index) =>
                                         <tr className="border-b border-gray-200 hover:bg-gray-100">
+                                            <td className="py-3 px-6 text-center whitespace-nowrap ">
+                                                <span className="font-medium ">{(page - 1) * 10 + index + 1}</span>
+                                            </td>
+
                                             <td className="py-3 px-6 text-left whitespace-nowrap ">
-                                                <span className="font-medium ml-12">{order.id}</span>
+                                                <span className="font-medium">{order.id}</span>
                                             </td>
 
                                             <td className="py-3 px-6 text-left">
@@ -76,10 +83,10 @@ function AdminOrders() {
                                                         <div className="mr-2 ">
                                                             <img
                                                                 className="w-6 h-6 rounded-full"
-                                                                src={item.thumbnail}
+                                                                src={item.product.thumbnail}
                                                             />
                                                         </div>
-                                                        <span>{item.title}</span>
+                                                        <span>{item.product.title}</span>
                                                     </div>
                                                 )}
                                             </td>
@@ -88,6 +95,11 @@ function AdminOrders() {
                                                 <span className="font-medium ml-8">$ {order.totalPrice}</span>
                                             </td>
 
+                                            <td className="py-3 px-6 text-left whitespace-nowrap ">
+                                                <div className="font-medium">{order.selectedAddress.street}, {order.selectedAddress.city}</div>
+                                                <div className="font-medium">{order.selectedAddress.state}, {order.selectedAddress.country}</div>
+                                                <div className="font-medium">{order.selectedAddress.pincode}</div>
+                                            </td>
 
                                             <td className="py-3 px-6 text-center">
                                                 {editStatusIndex !== index ?
@@ -142,7 +154,6 @@ function AdminOrders() {
 function Pagination({ handlePage, page, orders }) {
     const totalOrders = useSelector(selectTotalOrders)
     const totalPages = Math.ceil(totalOrders / ITEMS_PER_PAGE)
-    console.log(totalPages)
     return (
 
         <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">

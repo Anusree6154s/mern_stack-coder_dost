@@ -13,24 +13,32 @@ exports.createProduct = async (req, res) => {
 }
 
 exports.fetchAllQuery = async (req, res) => {
-    let query = Product.find({})
+    let product =null;
+    if(req.query.role==='user'){
+        product = Product.find({ deleted: { $ne: true } })
+    } else if(req.query.role==='admin'){
+        product = Product.find()
+    }
+    
     if (req.query._sort && req.query._order) {
-        query = query.sort({ [req.query._sort]: req.query._order })
+        product = product.sort({ [req.query._sort]: req.query._order })
     }
     if (req.query.category) {
-        query = query.find({ category: req.query.category })
+        const categories = req.query.category.includes(',') ? req.query.category.split(',') : req.query.category;
+        product = product.find({ category:{$in: categories }})
     }
     if (req.query.brand) {
-        query = query.find({ category: req.query.brand })
+        const brands = req.query.brand.includes(',') ? req.query.brand.split(',') : req.query.brand;
+        product = product.find({ brand:{$in: brands }})
     }
     if (req.query._page) {
         const pageSize = 10
         const page = req.query._page
-        query = query.skip(pageSize * (page - 1)).limit(pageSize)
+        product = product.skip(pageSize * (page - 1)).limit(pageSize)
     }
 
     try {
-        const data = await query.exec()
+        const data = await product.exec()
         res.status(201).json(data)
 
     } catch (error) {

@@ -6,15 +6,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsByFiltersAsync, selectAllProducts, selectAllBrands, selectAllCategories, selectTotalItems, fetchBrandsAsync, fetchCategoriesAsync } from '../../../product/productSlice';
 import { ITEMS_PER_PAGE } from '../../../../app/constants';
 import { Link } from 'react-router-dom';
+import { selectLoggedInUser } from '../../../auth/authSlice';
 
 //TODO: on server, code for sortaoptions
 //TODO: fix json server link to show data for multiple filter options , and pagination for multiple limits
 const sortOptions = [
-  { name: 'Best Rating', sort: '-rating', current: false },
-  { name: 'Price: Low to High', sort: 'price', current: false },
-  { name: 'Price: High to Low', sort: '-price', current: false },
+  { name: 'Best Rating', sorts: 'rating', order: 'desc', current: false },
+  { name: 'Price: Low to High', sorts: 'price', order: 'asc', current: false },
+  { name: 'Price: High to Low', sorts: 'price', order: 'desc', current: false },
   { name: 'Clear Sort', current: false }
 ]
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -32,6 +34,7 @@ function AdminProductList() {
   const totalItems = useSelector(selectTotalItems)
   const brands = useSelector(selectAllBrands)
   const categories = useSelector(selectAllCategories)
+  const user = useSelector(selectLoggedInUser)
 
   const filters = [
     {
@@ -65,7 +68,7 @@ function AdminProductList() {
   }
 
   const handleSort = (option) => {
-    const newSort = option.name === 'Clear Sort' ? {} : { _sort: option.sort }
+    const newSort = option.name === 'Clear Sort' ? {} : { _sort: option.sorts, _order: option.order }
     setSort(newSort)
   }
   const handlePage = (page) => {
@@ -74,8 +77,8 @@ function AdminProductList() {
 
   useEffect(() => {
     const pagination = { _page: page }
-    dispatch(fetchProductsByFiltersAsync({ filter, sort, pagination }))
-  }, [filter, sort, page])
+    dispatch(fetchProductsByFiltersAsync({ role: user.role, filter, sort, pagination }))
+  }, [user, filter, sort, page])
 
   useEffect(() => {
     setPage(1)
@@ -372,10 +375,11 @@ function ProductGrid({ products }) {
                       </p>
                     </div>
                     <div className='flex flex-col items-end'>
-                      <p className="text-sm font-medium text-gray-900">${product.price}</p>
-                      <p className="text-sm font-medium line-through text-gray-300">${(product.price - (product.price * (product.discountPercentage / 100))).toFixed(2)}</p>
+                      <p className="text-sm font-medium text-gray-900">${(product.price - (product.price * (product.discountPercentage / 100))).toFixed(2)}</p>
+                      <p className="text-sm font-medium line-through text-gray-400">${product.price}</p>
                     </div>
                   </div>
+                    {product.deleted && <p className='text-red-500'>product is deleted</p>}
                 </Link>
 
                 <Link to={`/admin/edit-product-form/${product.id}`} className=' mt-2 flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>

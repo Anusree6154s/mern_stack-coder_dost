@@ -21,30 +21,32 @@ function Checkout() {
     const dispatch = useDispatch()
     const items = useSelector(selectItems)
     const user = useSelector(selectLoggedInUser)
-    console.log('user: ', user)
     const currentOrder = useSelector(selectCurrentOrder)
 
-    const totalPrice = items.reduce((amount, item) => item.price * item.quantity + amount, 0)
+    const totalPrice = items.reduce((amount, item) => item.product.price * item.quantity + amount, 0)
     const totalItems = items.reduce((amount, item) => item.quantity + amount, 0)
 
     const [selectedAddress, setSelectedAddress] = useState({})
     const [paymentMethod, setpaymentMethod] = useState('cash')
 
-
-    const handleQuantity = (e, item) => dispatch(updateCartAsync({ ...item, quantity: +e.target.value }))
+    const handleQuantity = (e, item) => {
+        dispatch(updateCartAsync({ ...item, product: item.product.id, quantity: +e.target.value }))
+    }
     const handleDelete = (item) => dispatch(deleteItemFromCartAsync(item.id))
     const handleAddress = e => setSelectedAddress(JSON.parse(e.target.value))
     const handlePayment = e => setpaymentMethod(e.target.value)
     const handleOrder = () => {
         const order = { items, totalPrice, totalItems, user: user.id, selectedAddress, paymentMethod, status: 'Pending' }
+        console.log("order: ", order)
         dispatch(createOrderAsync(order))
         dispatch(resetCartAsync(user.id))  //reset cart
     }
-
+    console.log(currentOrder)
     return (
         <div>
             {!items.length && <Navigate to='/' replace={true}></Navigate>}
-            {currentOrder && <Navigate to={`/order-success/${currentOrder.id}`} replace={true}></Navigate>}
+            {currentOrder && currentOrder.paymenMethodt === 'cash' && <Navigate to={`/order-success/${currentOrder.id}`} replace={true}></Navigate>}
+            {currentOrder && currentOrder.paymentMethod === 'card' && <Navigate to={`/stripe-checkout/${currentOrder.id}`} replace={true}></Navigate>}
             <div className=" grid gap-10 max-w-7xl  lg:grid-cols-5">
                 <div className='lg:col-span-3 px-4 py-6 sm:px-6 lg:px-8 bg-white'>
                     <form noValidate onSubmit={handleSubmit((data) => {

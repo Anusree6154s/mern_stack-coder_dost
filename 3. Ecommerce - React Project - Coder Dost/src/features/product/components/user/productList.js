@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsByFiltersAsync, selectAllProducts, selectAllBrands, selectAllCategories, selectTotalItems, fetchBrandsAsync, fetchCategoriesAsync } from '../../../product/productSlice';
 import { ITEMS_PER_PAGE } from '../../../../app/constants';
 import { Link } from 'react-router-dom';
+import { selectLoggedInUser } from '../../../auth/authSlice';
 
 //TODO: on server, code for sortaoptions
 //TODO: in own project, fix json server link to show data for multiple filter options , and pagination for multiple limits
@@ -15,6 +16,7 @@ const sortOptions = [
   { name: 'Price: High to Low', sorts: 'price', order: 'desc', current: false },
   { name: 'Clear Sort', current: false }
 ]
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -32,6 +34,7 @@ function ProductList() {
   const totalItems = useSelector(selectTotalItems)
   const brands = useSelector(selectAllBrands)
   const categories = useSelector(selectAllCategories)
+  const user = useSelector(selectLoggedInUser)
 
   const filters = [
     {
@@ -74,8 +77,8 @@ function ProductList() {
 
   useEffect(() => {
     const pagination = { _page: page }
-    dispatch(fetchProductsByFiltersAsync({ filter, sort, pagination }))
-  }, [filter, sort, page])
+    dispatch(fetchProductsByFiltersAsync({ role: user.role, filter, sort, pagination }))
+  }, [user, filter, sort, page])
 
   useEffect(() => {
     setPage(1)
@@ -85,7 +88,6 @@ function ProductList() {
     dispatch(fetchBrandsAsync())
     dispatch(fetchCategoriesAsync())
   }, [])
-
 
   return (
     <div className='ProductList'>
@@ -177,7 +179,10 @@ function ProductList() {
                 ></DesktopFilter>
 
                 {/* Product grid */}
-                <ProductGrid products={products}></ProductGrid>
+                {products.length
+                  ? <ProductGrid products={products}></ProductGrid>
+                  : <div className="loader"></div>
+                }
               </div>
             </section>
 
@@ -369,8 +374,8 @@ function ProductGrid({ products }) {
                     </p>
                   </div>
                   <div className='flex flex-col items-end'>
-                    <p className="text-sm font-medium text-gray-900">${product.price}</p>
-                    <p className="text-sm font-medium line-through text-gray-300">${(product.price - (product.price * (product.discountPercentage / 100))).toFixed(2)}</p>
+                    <p className="text-sm font-medium text-gray-900">${(product.price - (product.price * (product.discountPercentage / 100))).toFixed(2)}</p>
+                    <p className="text-sm font-medium line-through text-gray-400">${product.price}</p>
                   </div>
 
                 </div>

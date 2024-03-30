@@ -1,4 +1,5 @@
 export function createOrder(item) {
+    console.log("orderItem: ", item)
     return new Promise(async (resolve) => {
         const response = await fetch('http://localhost:8080/orders', {
             method: 'POST',

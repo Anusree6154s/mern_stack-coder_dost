@@ -1,18 +1,18 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Link, Navigate } from "react-router-dom"
-import { deleteItemFromCartAsync, selectItems, updateCartAsync } from "./cartSlice"
+import { deleteItemFromCartAsync, selectCartStatus, selectItems, updateCartAsync } from "./cartSlice"
 
 //TODO:items.quantity number change on multiple number of same item added to cart
 function Cart() {
   const dispatch = useDispatch()
   const items = useSelector(selectItems)
+  const status = useSelector(selectCartStatus)
 
   const totalPrice = items.length > 0 ? items.reduce((amount, item) => item.product.price * item.quantity + amount, 0) : 0
   const totalItems = items.length > 0 ? items.reduce((amount, item) => item.quantity + amount, 0) : 0
 
-  console.log(items)
   const handleQuantity = (e, item) => {
-    dispatch(updateCartAsync({ ...item, quantity: +e.target.value }))
+    dispatch(updateCartAsync({ ...item, product: item.product.id, quantity: +e.target.value }))
   }
 
   const handleDelete = (item) => {
@@ -21,7 +21,7 @@ function Cart() {
 
   return (
     <div >
-      {!items.length && <Navigate to='/' replace={true}></Navigate>}
+      {!items.length && status==='idle' && <Navigate to='/' replace={true}></Navigate>}
 
       <div className="flex flex-col bg-white max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex-1 px-4 py-6 sm:px-6 flow-root">
