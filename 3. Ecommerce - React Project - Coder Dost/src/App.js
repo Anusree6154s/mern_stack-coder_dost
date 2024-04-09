@@ -7,6 +7,7 @@ import { fetchItemsByUserIdAsync, } from "./features/cart/cartSlice";
 import { checkAuthAsync, selectLoggedInUser, selectUserChecked, } from "./features/auth/authSlice";
 import { fetchLoggedInUserAsync } from "./features/user/userSlice";
 import { fetchWishListByUserIdAsync } from "./features/wishList/wishListSlice";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ function App() {
     <div className="dark:bg-gray-900">
       {userChecked
         ? <RouterProvider router={router} />
-        : <div className="loader"></div>
+        : <LoginPage></LoginPage>
       }
 
     </div>

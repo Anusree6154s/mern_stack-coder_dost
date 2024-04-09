@@ -100,6 +100,10 @@ export const authSlice = createSlice({
         state.loggedInUser = action.payload;
         state.userAuthenticated = true;
       })
+      .addCase(checkAuthAsync.pending, (state, action) => {
+        state.status = 'idle';
+        state.userAuthenticated = false;
+      })
       .addCase(updateUserAsync.pending, (state) => {
         state.status = 'loading';
       })
