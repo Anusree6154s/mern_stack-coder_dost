@@ -32,7 +32,7 @@ export default function NavBar({ children, name, preview }) {
 
   const userNavigation = user.role === 'user' ? [
     { name: 'Your Profile', link: '/profile' },
-    { name: 'My Orders', link: '/orders' },
+    { name: 'My Orders', link: '/my-orders' },
     { name: 'Sign out', link: '/logout' },
   ] : [
     { name: 'Your Profile', link: '/admin/profile' },

@@ -115,6 +115,9 @@ server.use('/cart', isAuth(), cartRouter.router)
 server.use('/wishlist', isAuth(), wishListRouter.router)
 server.use('/orders', isAuth(), orderRouter.router)
 
+// this line we add to make react router work in case of other routes doesnt match
+server.get('*', (req, res) => res.sendFile(path.resolve('build', 'index.html')));
+
 
 //payments
 const stripe = require("stripe")(process.env.STRIPE);
