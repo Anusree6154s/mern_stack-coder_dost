@@ -17,7 +17,9 @@ import AdminProductDetailPage from './pages/adminPages/AdminProductDetailPage';
 import AddProductFormPage from './pages/adminPages/AddProductFormPage';
 import EditProductFormPage from './pages/adminPages/EditProductFormPage';
 import AdminOrdersPage from './pages/adminPages/AdminOrdersPage';
-import StripeCheckout from './pages/StripeCheckout';
+import StripeCheckoutPage from './pages/StripeCheckoutPage';
+import AdminProfilePage from './pages/adminPages/AdminProfilePage';
+import WishListPage from './pages/userPages/WishListPage';
 
 export const router = createBrowserRouter([
   {
@@ -57,15 +59,21 @@ export const router = createBrowserRouter([
     element: <OrderSuccessPage></OrderSuccessPage>
   },
   {
-    path: "/orders",
+    path: "orders",
     element: <Protected>
       <UserOrdersPage></UserOrdersPage>
     </Protected>,
   },
   {
-    path: "/profile",
+    path: "profile",
     element: <Protected>
       <UserProfilePage></UserProfilePage>
+    </Protected>,
+  },
+  {
+    path: "wishlist",
+    element: <Protected>
+      <WishListPage></WishListPage>
     </Protected>,
   },
   {
@@ -111,9 +119,15 @@ export const router = createBrowserRouter([
     </Protected>
   },
   {
-    path: "stripe-checkout/:id",
+    path: "/admin/profile",
     element: <Protected>
-      <StripeCheckout></StripeCheckout>,
+      <AdminProfilePage></AdminProfilePage>,
+    </Protected>
+  },
+  {
+    path: "/stripe-checkout/:id",
+    element: <Protected>
+      <StripeCheckoutPage></StripeCheckoutPage>,
     </Protected>
   },
 ]);

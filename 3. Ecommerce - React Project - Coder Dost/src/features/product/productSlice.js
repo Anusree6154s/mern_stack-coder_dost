@@ -7,6 +7,7 @@ const initialState = {
   categories: [],
   totalItems: 0,
   selectedProduct: null,
+  newProduct:null,
   status: 'idle',
 };
 
@@ -60,7 +61,7 @@ export const createProductAsync = createAsyncThunk(
 );
 
 export const editProductAsync = createAsyncThunk(
-  'products/createProduct',
+  'products/editProduct',
   async (product) => {
     const response = await editProduct(product);
     return response;
@@ -72,8 +73,8 @@ export const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    resetNewProduct: (state) => {
+      state.newProduct = null;
     }
   },
   extraReducers: (builder) => {
@@ -120,12 +121,22 @@ export const productsSlice = createSlice({
       .addCase(createProductAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.products.push(action.payload);
+        state.newProduct=action.payload;
+      })
+      .addCase(editProductAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(editProductAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        const index= state.products.findIndex(item=>item.id===action.payload.id)
+        state.products.splice(index, 1, action.payload)
+        state.newProduct=action.payload;
       })
 
   },
 });
 
-export const { increment, decrement, incrementByAmount } = productsSlice.actions;
+export const { resetNewProduct } = productsSlice.actions;
 
 
 export const selectAllProducts = (state) => state.product.products;
@@ -133,6 +144,7 @@ export const selectTotalItems = (state) => state.product.totalItems;
 export const selectAllBrands = (state) => state.product.brands;
 export const selectAllCategories = (state) => state.product.categories;
 export const selectProductById = (state) => state.product.selectedProduct;
+export const selectNewProduct = (state) => state.product.newProduct;
 
 
 export default productsSlice.reducer;

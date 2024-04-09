@@ -7,8 +7,11 @@ const userSchema = new Schema({
     password: { type: Buffer, required: true },
     role: { type: String, required: true, default: 'user' },
     addresses: { type: [Schema.Types.Mixed] },
+    address: { type: Schema.Types.Mixed },
     //TODO: seperate schemas for this
     name: { type: String },
+    phone: { type: Number },
+    image: { type: Schema.Types.Mixed },
     orders: { type: [Schema.Types.Mixed] },
     salt: Buffer
 })

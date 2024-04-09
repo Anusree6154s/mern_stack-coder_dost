@@ -3,16 +3,10 @@ import "./styles/App.css";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./Routes";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchItemsByUserIdAsync,
-  selectItems,
-} from "./features/cart/cartSlice";
-import {
-  checkAuthAsync,
-  selectLoggedInUser,
-  selectUserChecked,
-} from "./features/auth/authSlice";
+import { fetchItemsByUserIdAsync, } from "./features/cart/cartSlice";
+import { checkAuthAsync, selectLoggedInUser, selectUserChecked, } from "./features/auth/authSlice";
 import { fetchLoggedInUserAsync } from "./features/user/userSlice";
+import { fetchWishListByUserIdAsync } from "./features/wishList/wishListSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,6 +16,7 @@ function App() {
   useEffect(() => {
     if (user) {
       dispatch(fetchItemsByUserIdAsync());
+      dispatch(fetchWishListByUserIdAsync())
       dispatch(fetchLoggedInUserAsync());
     }
   }, [user]);
@@ -31,7 +26,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="dark:bg-gray-900">
       {userChecked
         ? <RouterProvider router={router} />
         : <div className="loader"></div>

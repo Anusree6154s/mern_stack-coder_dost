@@ -7,8 +7,10 @@ const brandsRouter = require('./routes/Brands.js')
 const usersRouter = require('./routes/Users.js')
 const authRouter = require('./routes/Auth.js')
 const cartRouter = require('./routes/Cart.js')
+const wishListRouter = require('./routes/WishList.js')
 const orderRouter = require('./routes/Order.js')
 const cors = require('cors')
+const path = require("path")
 
 // imports related to passport authentication
 const session = require('express-session');
@@ -30,11 +32,13 @@ var cookieParser = require('cookie-parser')
 const server = express()
 const uri = process.env.URI
 
+
 //jwt authentication
 const secretKey = process.env.SECRET_KEY;
 var opts = {}
 opts.jwtFromRequest = cookieExtractor
 opts.secretOrKey = secretKey;
+
 
 //passport authentication
 server.use(cookieParser());
@@ -44,6 +48,7 @@ server.use(session({
     saveUninitialized: false
 }));
 server.use(passport.authenticate('session'));
+
 
 //passport strategies
 passport.use('local', new LocalStrategy(
@@ -95,7 +100,9 @@ passport.use('jwt', new JwtStrategy(opts, async function (jwt_payload, done) {
 
 }));
 
+
 //middlewares
+server.use(express.static(path.resolve(__dirname, 'build')))
 server.use(cors({ exposedHeaders: ['X-Total-Count'] }))
 server.use(express.json())//to parse request body
 server.use(express.raw({ type: 'application/json' }))
@@ -105,90 +112,104 @@ server.use('/brands', isAuth(), brandsRouter.router)
 server.use('/users', isAuth(), usersRouter.router)
 server.use('/auth', authRouter.router)
 server.use('/cart', isAuth(), cartRouter.router)
+server.use('/wishlist', isAuth(), wishListRouter.router)
 server.use('/orders', isAuth(), orderRouter.router)
+
 
 //payments
 const stripe = require("stripe")(process.env.STRIPE);
 
 
 server.post("/create-payment-intent", async (req, res) => {
-    const { totalPrice } = req.body;
-    console.log("recieved")
-    // Create a PaymentIntent with the order amount and currency
-    const paymentIntent = await stripe.paymentIntents.create({
-        amount: totalPrice * 100,
-        currency: "inr",
-        description: " for amazon-clone project",
-        shipping: {
-            name: "Random singh",
-            address: {
-                line1: "510 Townsend St",
-                postal_code: "98140",
-                city: "San Francisco",
-                state: "Gujrat",
-                country: "US",
+    try {
+        const customer = await stripe.customers.create({
+            email: req.body.selectedAddress.email,
+            shipping: {
+                address: {
+                    city: "Surat",
+                    country: "US",
+                    line1: "RR Mall",
+                    line2: "Piplod",
+                    postal_code: "683521",
+                    state: "Gujarat"
+                },
+                name: "Anu"
             },
-        },
-        // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-        automatic_payment_methods: {
-            enabled: true,
-        },
-    });
+            metadata: {
+                userId: req.body.user,
+            }
+        })
 
-    res.send({
-        clientSecret: paymentIntent.client_secret,
-    });
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: req.body.totalPrice * 100,
+            currency: 'inr',
+            customer: customer.id,
+            description: "payment for amazon clone",
+            automatic_payment_methods: {
+                enabled: true,
+            },
+        });
+        console.log(paymentIntent.client_secret)
+        res.send({
+            clientSecret: paymentIntent.client_secret,
+        })
+
+    } catch (error) {
+        console.log("checkout session error: ", error)
+    }
+
+
 });
 
 
+// //webhook
 
-//webhook
-// Replace this endpoint secret with your endpoint's unique secret
-// If you are testing with the CLI, find the secret by running 'stripe listen'
-// If you are using an endpoint defined with the API or dashboard, look in your webhook settings
-// at https://dashboard.stripe.com/webhooks
-const endpointSecret = 'whsec_21dc86952f9d9ad1b64e0a382d74895e8064777d14081ee4be8b9cd760305d6b';
+let endpointSecret;
+
+// // This is your Stripe CLI webhook secret for testing your endpoint locally.
+//  endpointSecret = "whsec_21dc86952f9d9ad1b64e0a382d74895e8064777d14081ee4be8b9cd760305d6b";
 
 server.post('/webhook', express.raw({ type: 'application/json' }), (request, response) => {
-    let event = request.body;
-    // Only verify the event if you have an endpoint secret defined.
-    // Otherwise use the basic event deserialized with JSON.parse
+    const sig = request.headers['stripe-signature'];
+
+    let data, eventType;
+
+    console.log("request.body: ", request.body)
+    console.log("sig: ", sig)
     if (endpointSecret) {
-        // Get the signature sent by Stripe
-        const signature = request.headers['stripe-signature'];
+        let event;
+
         try {
-            event = stripe.webhooks.constructEvent(
-                request.body,
-                signature,
-                endpointSecret
-            );
+            event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+            console.log("webhook verified")
         } catch (err) {
-            console.log(`⚠️  Webhook signature verification failed.`, err.message);
-            return response.sendStatus(400);
+            console.log("webhook error: ", err)
+            response.status(400).send(`Webhook Error: ${err.message}`);
+            return;
         }
+
+        data = event.data.object
+        eventType = event.type
+    } else {
+        data = request.body.data.object
+        eventType = request.body.type
     }
 
-    // Handle the event
-    switch (event.type) {
-        case 'payment_intent.succeeded':
-            const paymentIntent = event.data.object;
-            console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
-            // Then define and call a method to handle the successful payment intent.
-            // handlePaymentIntentSucceeded(paymentIntent);
-            break;
-        case 'payment_method.attached':
-            const paymentMethod = event.data.object;
-            // Then define and call a method to handle the successful attachment of a PaymentMethod.
-            // handlePaymentMethodAttached(paymentMethod);
-            break;
-        default:
-            // Unexpected event type
-            console.log(`Unhandled event type ${event.type}.`);
+    if (eventType === 'payment_intent.succeeded') {
+        stripe.customers
+            .retrieve(data.customer)
+            .then(customer => {
+                console.log("data: ", data)
+            })
+            .catch(error => {
+                console.error('Error retrieving customer:', error);
+            })
     }
 
     // Return a 200 response to acknowledge receipt of the event
-    response.send();
+    response.send().end();
 });
+
 
 
 

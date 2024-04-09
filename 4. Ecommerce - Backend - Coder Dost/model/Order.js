@@ -6,10 +6,12 @@ const orderSchema = new Schema({
     items: { type: [Schema.Types.Mixed] },
     totalPrice: { type: Number },
     totalItems: { type: Number },
-    user: { type: Schema.Types.ObjectId, ref: 'User' },
+    user: { type: Schema.Types.ObjectId},
     paymentMethod: { type: String },
     status: { type: String, default: 'Pending' },
     selectedAddress: { type: Schema.Types.Mixed },
+    date: { type: String },
+    email: { type: String }
 })
 
 const virtual = orderSchema.virtual('id')

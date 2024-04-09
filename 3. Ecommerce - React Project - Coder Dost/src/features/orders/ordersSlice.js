@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createOrder, updateOrder } from './ordersAPI';
+import { createOrder, makePayment, updateOrder } from './ordersAPI';
 
 const initialState = {
     orders: [],
     currentOrder: null,
     status: 'idle',
+    clientSecret:null
 };
 
 export const createOrderAsync = createAsyncThunk(
@@ -15,11 +16,14 @@ export const createOrderAsync = createAsyncThunk(
     }
 );
 
-export const updateOrderAsync = createAsyncThunk(
-    'orders/updateOrder',
-    async (order) => {
-        const response = await updateOrder(order);
-        return response.data;
+
+export const makePaymentAsync = createAsyncThunk(
+    'orders/makePayment',
+    async (item) => {
+        console.log("item: ", item)
+        const response = await makePayment(item);
+        console.log("response.data: ", response.data)
+        return response.data
     }
 );
 
@@ -41,13 +45,12 @@ export const ordersSlice = createSlice({
                 state.orders.push(action.payload);
                 state.currentOrder = action.payload
             })
-            .addCase(updateOrderAsync.pending, (state) => {
+            .addCase(makePaymentAsync.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(updateOrderAsync.fulfilled, (state, action) => {
+            .addCase(makePaymentAsync.fulfilled, (state,action) => {
                 state.status = 'idle';
-                const index = state.orders.find(item => item.id === action.payload.id)
-                state.orders.splice(index, 1, action.payload);
+                state.clientSecret = action.payload
             })
     },
 });
@@ -56,5 +59,6 @@ export const ordersSlice = createSlice({
 export const { resetOrder } = ordersSlice.actions
 
 export const selectCurrentOrder = (state) => state.orders.currentOrder
+export const selectClientSecret = (state) => state.orders.clientSecret
 
 export default ordersSlice.reducer;

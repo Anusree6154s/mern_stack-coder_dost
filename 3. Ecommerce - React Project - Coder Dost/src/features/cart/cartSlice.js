@@ -85,6 +85,7 @@ export const cartSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(resetCartAsync.fulfilled, (state, action) => {
+        console.log("yes")
         state.status = 'idle';
         state.items = []
       })

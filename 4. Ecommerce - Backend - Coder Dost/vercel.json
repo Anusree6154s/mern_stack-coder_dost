@@ -1,0 +1,102 @@
+{
+    "builds": [
+        {
+            "src": "index.js",
+            "use": "@vercel/node"
+        },
+        {
+            "src": "build/**",
+            "use": "@vercel/static"
+        }
+    ],
+    "routes": [
+        {
+            "source": "/",
+            "destination": "index.js"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "index.js"
+        },
+        {
+            "source": "/products",
+            "destination": "index.js"
+        },
+        {
+            "source": "/products/(.*)",
+            "destination": "index.js"
+        },
+        {
+            "source": "/categories",
+            "destination": "index.js"
+        },
+        {
+            "source": "/categories/(.*)",
+            "destination": "index.js"
+        },
+        {
+            "source": "/brands",
+            "destination": "index.js"
+        },
+        {
+            "source": "/brands/(.*)",
+            "destination": "index.js"
+        },
+        {
+            "source": "/users",
+            "destination": "index.js"
+        },
+        {
+            "source": "/users/(.*)",
+            "destination": "index.js"
+        },
+        {
+            "source": "/auth",
+            "destination": "index.js"
+        },
+        {
+            "source": "/auth/(.*)",
+            "destination": "index.js"
+        },
+        {
+            "source": "/cart",
+            "destination": "index.js"
+        },
+        {
+            "source": "/cart/(.*)",
+            "destination": "index.js"
+        },
+        {
+            "source": "/wishlist",
+            "destination": "index.js"
+        },
+        {
+            "source": "/wishlist/(.*)",
+            "destination": "index.js"
+        },
+        {
+            "source": "/orders",
+            "destination": "index.js"
+        },
+        {
+            "source": "/orders/(.*)",
+            "destination": "index.js"
+        },
+        {
+            "source": "/webhook",
+            "destination": "index.js"
+        },
+        {
+            "source": "/create-payment-intent",
+            "destination": "index.js"
+        },
+        {
+            "source": "/",
+            "destination": "build/index.html"
+        },
+        {
+            "source": "/(.+)",
+            "destination": "build/$1"
+        }
+    ]
+}

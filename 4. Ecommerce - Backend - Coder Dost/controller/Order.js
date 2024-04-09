@@ -4,6 +4,7 @@ exports.createOrder = async (req, res) => {
     const order = new Order(req.body)
     try {
         const data = await order.save()
+        console.log(order)
         res.status(201).json(data)
     } catch (error) {
         res.status(400).json(error)
@@ -14,7 +15,9 @@ exports.fetchOrdersByUser = async (req, res) => {
     const { user } = req.query
     try {
         const data = await Order.find({ user: user })
-        res.status(201).json(data)
+        console.log(data)
+    res.status(201).json(data)
+
     } catch (error) {
         res.status(400).json(error)
     }

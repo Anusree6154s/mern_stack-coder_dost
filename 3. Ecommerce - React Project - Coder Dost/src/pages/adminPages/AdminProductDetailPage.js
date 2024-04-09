@@ -4,7 +4,7 @@ import AdminProductDetail from "../../features/product/components/admin/adminPro
 function AdminProductDetailPage (){
     return (
         <div>
-            <NavBar name='Products'>
+            <NavBar name='Products' preview='true'>
                 <AdminProductDetail></AdminProductDetail>
             </NavBar>
         </div>

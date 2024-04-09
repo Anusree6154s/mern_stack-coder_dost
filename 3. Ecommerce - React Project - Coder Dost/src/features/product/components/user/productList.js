@@ -91,7 +91,7 @@ function ProductList() {
 
   return (
     <div className='ProductList'>
-      <div className="bg-white">
+      <div className="bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 rounded-md">
         <div>
           {/* Mobile filter dialog */}
           <MobileFilter
@@ -109,10 +109,10 @@ function ProductList() {
                 {/* Sort Menu*/}
                 <Menu as="div" className="relative inline-block text-left">
                   <div>
-                    <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                    <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 ">
                       Sort
                       <ChevronDownIcon
-                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-100"
                         aria-hidden="true"
                       />
                     </Menu.Button>
@@ -127,7 +127,7 @@ function ProductList() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white dark:bg-gray-700 shadow-2xl ring-1 ring-black dark:ring-white ring-opacity-5 dark:ring-opacity-5 focus:outline-none">
                       <div className="py-1">
                         {sortOptions.map((option) => (
                           <Menu.Item key={option.name} label={option.label}>
@@ -135,8 +135,8 @@ function ProductList() {
 
                               <a
                                 className={classNames(
-                                  option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                                  active ? 'bg-gray-100' : '',
+                                  option.current ? 'font-medium text-gray-900 dark:text-gray-100' : 'text-gray-500 dark:text-gray-300',
+                                  active ? 'bg-gray-100 dark:bg-gray-600' : '',
                                   'block px-4 py-2 text-sm cursor-pointer',
                                 )}
                                 onClick={(e) => handleSort(option)}
@@ -152,16 +152,10 @@ function ProductList() {
                   </Transition>
                 </Menu>
 
-                {/* Layout Button */}
-                <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
-                  <span className="sr-only">View grid</span>
-                  <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-                </button>
-
                 {/* Filter Button */}
                 <button
                   type="button"
-                  className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+                  className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-200 sm:ml-6 lg:hidden"
                   onClick={() => setMobileFiltersOpen(true)}
                 >
                   <span className="sr-only">Filters</span>
@@ -181,7 +175,7 @@ function ProductList() {
                 {/* Product grid */}
                 {products.length
                   ? <ProductGrid products={products}></ProductGrid>
-                  : <div className="loader"></div>
+                  : <div className='col-span-1 lg:col-span-3'><div className="loader"></div></div>
                 }
               </div>
             </section>
@@ -226,12 +220,12 @@ function MobileFilter({ mobileFiltersOpen, setMobileFiltersOpen, handleFilter, f
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
+            <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white dark:bg-gray-800 py-4 pb-12 shadow-xl">
               <div className="flex items-center justify-between px-4">
-                <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">Filters</h2>
                 <button
                   type="button"
-                  className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
+                  className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white dark:bg-gray-800 p-2 text-gray-400 dark:hover:text-gray-100"
                   onClick={() => setMobileFiltersOpen(false)}
                 >
                   <span className="sr-only">Close menu</span>
@@ -240,14 +234,14 @@ function MobileFilter({ mobileFiltersOpen, setMobileFiltersOpen, handleFilter, f
               </div>
 
               {/* Filters */}
-              <form className="mt-4 border-t border-gray-200">
+              <form className="mt-4 border-t border-gray-200 dark:border-gray-700">
                 {filters.map((section) => (
-                  <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
+                  <Disclosure as="div" key={section.id} className="border-t border-gray-200 dark:border-gray-600 px-4 py-6">
                     {({ open }) => (
                       <>
                         <h3 className="-mx-2 -my-3 flow-root">
-                          <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">{section.name}</span>
+                          <Disclosure.Button className="flex w-full items-center justify-between bg-white dark:bg-gray-800 px-2 py-3 text-gray-400 hover:text-gray-500  dark:hover:text-gray-100">
+                            <span className="font-medium text-gray-900 dark:text-gray-300 dark:hover:text-gray-100">{section.name}</span>
                             <span className="ml-6 flex items-center">
                               {open ? (
                                 <MinusIcon className="h-5 w-5" aria-hidden="true" />
@@ -268,11 +262,11 @@ function MobileFilter({ mobileFiltersOpen, setMobileFiltersOpen, handleFilter, f
                                   type="checkbox"
                                   defaultChecked={option.checked}
                                   onChange={e => handleFilter(e, section, option)}
-                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                  className={`h-4 w-4 rounded border-gray-300 dark:border-gray-500 bg-gray-100 dark:bg-gray-700 focus:ring-transparent text-customBlue `}
                                 />
                                 <label
                                   htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                  className="ml-3 min-w-0 flex-1 text-gray-500"
+                                  className="ml-3 min-w-0 flex-1 text-gray-500 dark:text-gray-300"
                                 >
                                   {option.label}
                                 </label>
@@ -297,12 +291,12 @@ function DesktopFilter({ filters, handleFilter }) {
   return (
     <form className="hidden lg:block">
       {filters.map((section) => (
-        <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
+        <Disclosure as="div" key={section.id} className="border-b border-gray-200 dark:border-gray-500 py-6">
           {({ open }) => (
             <>
               <h3 className="-my-3 flow-root">
-                <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                  <span className="font-medium text-gray-900">{section.name}</span>
+                <Disclosure.Button className="flex w-full items-center justify-between bg-white dark:bg-gray-800 py-3 text-sm text-gray-400 hover:text-gray-500 datk:text-gray-300 dark:hover:text-gray-100">
+                  <span className="font-medium text-gray-900 dark:text-gray-300 dark:hover:text-gray-100">{section.name}</span>
                   <span className="ml-6 flex items-center">
                     {open ? (
                       <MinusIcon className="h-5 w-5" aria-hidden="true" />
@@ -323,11 +317,11 @@ function DesktopFilter({ filters, handleFilter }) {
                         type="checkbox"
                         defaultChecked={option.checked}
                         onChange={e => handleFilter(e, section, option)}
-                        className='h-4 w-4 rounded border-gray-300 text-customBlue focus:ring-transparent'
+                        className='h-4 w-4 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-customBlue focus:ring-transparent'
                       />
                       <label
                         htmlFor={`filter-${section.id}-${optionIndex}`}
-                        className="ml-3 text-sm text-gray-600"
+                        className="ml-3 text-sm text-gray-600 dark:text-gray-300"
                       >
                         {option.label}
                       </label>
@@ -348,12 +342,12 @@ function ProductGrid({ products }) {
   return (
     <div className="lg:col-span-3">
       {/* Your content */}
-      <div className="bg-white">
+      <div >
         <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-0 lg:max-w-7xl lg:px-8">
-          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 ">
             {products && products.map((product) => (
-              <div key={product.id} className="group relative border-2 rounded-md p-2">
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-white lg:aspect-none group-hover:opacity-75 lg:h-60">
+              <div key={product.id} className="group relative border-2 dark:border-gray-700  dark:hover:bg-gray-700 dark:hover:border-transparent rounded-md p-2">
+                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75 dark:opacity-90 dark:group-hover:opacity-100  lg:h-60">
                   <img
                     src={product.thumbnail}
                     alt={product.title}
@@ -362,24 +356,23 @@ function ProductGrid({ products }) {
                 </div>
                 <div className="mt-4 flex justify-between">
                   <div>
-                    <h3 className="text-medium text-black-700">
+                    <h3 className="text-medium text-gray-700 dark:text-gray-200">
                       <Link to={`/product-detail/${product.id}`}>
                         <span aria-hidden="true" className="absolute inset-0" />
                         {product.title}
                       </Link>
                     </h3>
-                    <p className="mt-1 text-sm text-gray-500 flex gap-2 items-center ">
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 flex gap-2 items-center ">
                       <StarIcon className='h-4 w-4'></StarIcon>
                       {product.rating}
                     </p>
                   </div>
                   <div className='flex flex-col items-end'>
-                    <p className="text-sm font-medium text-gray-900">${(product.price - (product.price * (product.discountPercentage / 100))).toFixed(2)}</p>
-                    <p className="text-sm font-medium line-through text-gray-400">${product.price}</p>
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">₹{(product.price - (product.price * (product.discountPercentage / 100))).toFixed(2)}</p>
+                    <p className="text-sm font-medium line-through text-gray-400 dark:text-gray-500 ">₹{product.price}</p>
                   </div>
-
                 </div>
-                {product.deleted && <p className='text-red-500'>product is deleted</p>}
+                {product.stock === 0 && <p className='text-red-500'>out of stock</p>}
               </div>
             ))}
           </div>
@@ -391,26 +384,28 @@ function ProductGrid({ products }) {
 
 function Pagination({ handlePage, page, setPage, totalItems }) {
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
-  // console.log(totalItems)
   return (
 
-    <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+    <div className="flex items-center justify-between border-t border-gray-200 bg-white dark:border-transparent dark:bg-gray-800 px-4 py-3 sm:px-6">
       <div className="flex flex-1 justify-between sm:hidden">
-        <a
-          className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer"
+        <button
+          onClick={e => handlePage(page > 1 ? page - 1 : page)}
+          className={`relative inline-flex items-center rounded-md border border-gray-300   px-4 py-2 text-sm font-medium ${(page-1)<1 ? 'bg-gray-100 text-gray-300 dark:bg-gray-800 dark:text-gray-700 cursor-auto dark:border-gray-700 ': 'text-gray-700 dark:text-gray-400 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-200 dark:border-gray-500 '}`}
         >
           Previous
-        </a>
-        <a
-          className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer"
+        </button>
+        <p className="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 dark:text-gray-300">Page {page}</p>
+        <button
+          onClick={e => handlePage(page < totalPages ? page + 1 : page)}
+          className={`relative inline-flex items-center rounded-md border border-gray-300   px-4 py-2 text-sm font-medium ${(page+1)>totalPages ? 'bg-gray-100 text-gray-300 dark:bg-gray-800 dark:text-gray-700 cursor-auto dark:border-gray-700 ': 'text-gray-700 dark:text-gray-400 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-200 dark:border-gray-500 '}`}
         >
           Next
-        </a>
+        </button>
       </div>
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p
-            className="text-sm text-gray-700">
+            className="text-sm text-gray-700 dark:text-gray-300">
             Showing <span className="font-medium">{(page - 1) * ITEMS_PER_PAGE + 1}</span> to <span className="font-medium">{page * ITEMS_PER_PAGE > totalItems ? totalItems : page * ITEMS_PER_PAGE}</span> of{' '}
             <span className="font-medium">{totalItems}</span> results
           </p>
@@ -418,8 +413,8 @@ function Pagination({ handlePage, page, setPage, totalItems }) {
         <div>
           <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
             <div
-              onClick={e => handlePage(page > 1 ? page - 1 : page)}
-              className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 cursor pointer"
+              onClick={() => handlePage(page > 1 ? page - 1 : page)}
+              className={`relative inline-flex items-center rounded-l-md border px-2 py-2 text-sm font-medium ${(page-1)<1 ? 'bg-gray-100 text-gray-300 dark:bg-gray-800 dark:text-gray-700 cursor-auto dark:border-gray-700 ': 'text-gray-700 dark:text-gray-400 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-200 dark:border-gray-500 '}`}
             >
               <span className="sr-only">Previous</span>
               <ChevronLeftIcon
@@ -433,9 +428,9 @@ function Pagination({ handlePage, page, setPage, totalItems }) {
             {Array.from({ length: totalPages }).map((items, index) =>
               <div
                 key={index}
-                onClick={e => handlePage(index + 1)}
+                onClick={() => handlePage(index + 1)}
                 aria-current="page"
-                className={`relative z-10 inline-flex items-center ${(index + 1) === page ? 'bg-customBlue text-white' : 'text-gray-500 hover:bg-gray-50 '} px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-customBlue cursor-pointer ring-gray-300  border border-gray-300`}
+                className={`relative z-10 inline-flex items-center dark:border-gray-500 ${(index + 1) === page ? 'bg-customBlue dark:bg-blue-500 text-white' : 'text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-gray-100 '} px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-customBlue cursor-pointer ring-gray-300 dark:ring-gray-700  border border-gray-300 `}
               >
                 {index + 1}
 
@@ -443,8 +438,8 @@ function Pagination({ handlePage, page, setPage, totalItems }) {
             )}
 
             <div
-              onClick={e => handlePage(page < totalPages ? page + 1 : page)}
-              className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 cursor-pointer"
+              onClick={() => handlePage(page < totalPages ? page + 1 : page)}
+              className={`relative inline-flex items-center rounded-r-md border px-2 py-2 text-sm font-medium ${(page+1)>totalPages ? 'bg-gray-100 text-gray-300 dark:bg-gray-800 dark:text-gray-700 cursor-auto dark:border-gray-700 ': 'text-gray-700 dark:text-gray-400 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-200 dark:border-gray-500 '}`}
             >
               <span className="sr-only">Next</span>
               <ChevronRightIcon
