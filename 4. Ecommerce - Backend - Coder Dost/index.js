@@ -32,7 +32,6 @@ var cookieParser = require('cookie-parser')
 const server = express()
 const uri = process.env.URI
 
-
 //jwt authentication
 const secretKey = process.env.SECRET_KEY;
 var opts = {}
@@ -41,7 +40,7 @@ opts.secretOrKey = secretKey;
 
 
 //passport authentication
-server.use(cookieParser());
+
 server.use(session({
     secret: 'keyboard cat',
     resave: false,
@@ -54,22 +53,30 @@ server.use(passport.authenticate('session'));
 passport.use('local', new LocalStrategy(
     { usernameField: "email" },
     async function (email, password, done) {
+        console.log("local called", email)
         try {
             const user = await User.findOne({ email: email }).exec()
             if (!user) {
+                console.log("local called2")
+
                 return done(null, false, { message: 'No such user email' })
             }
 
             crypto.pbkdf2(password, user.salt, 310000, 32, 'sha256', async function (err, hashedPassword) {
                 if (!crypto.timingSafeEqual(user.password, hashedPassword)) {
+                    console.log("local called3")
                     done(null, false, { message: 'Invalid credentials' })
                 } else {
+                    console.log("local called4")
                     const token = jwt.sign(santizeUser(user), secretKey);
-                    return done(null, santizeUser(user)) //this line sends to serializer
+                    console.log(token)
+                    return done(null, {info:santizeUser(user), token:token}) //this line sends to serializer
+                    // return done(null, santizeUser(user)) //this line sends to serializer
                 }
             });
 
         } catch (error) {
+            console.log("local called5")
             return done(error)
         }
     }
@@ -86,23 +93,27 @@ passport.deserializeUser(function (user, cb) {
 });
 
 passport.use('jwt', new JwtStrategy(opts, async function (jwt_payload, done) {
+    console.log("jwt")
+    console.log(jwt_payload)
     const user = await User.findOne({ _id: jwt_payload.id });
     try {
         if (user) {
             return done(null, santizeUser(user)); //this calls serializer
         } else {
+            console.lo("problem2")
             return done(null, false);
             // or you could create a new account
         }
     } catch (error) {
+        console.log("bigproblem")
         return done(err, false);
     }
 
 }));
 
-
 //middlewares
 server.use(express.static(path.resolve(__dirname, 'build')))
+server.use(cookieParser()); //to get cookies in  req.cookies["jwt"] in 
 server.use(cors({ exposedHeaders: ['X-Total-Count'] }))
 server.use(express.json())//to parse request body
 server.use(express.raw({ type: 'application/json' }))
@@ -229,7 +240,6 @@ main().catch(error => console.log(error))
 server.get('/', (req, res) => {
     res.json({ status: 'success' })
 })
-
 
 
 server.listen(process.env.PORT, () => {

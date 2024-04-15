@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
 import "./styles/App.css";
-import { RouterProvider } from "react-router-dom";
-import { router } from "./Routes";
+import { Navigate, RouterProvider } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchItemsByUserIdAsync, } from "./features/cart/cartSlice";
 import { checkAuthAsync, selectLoggedInUser, selectUserChecked, } from "./features/auth/authSlice";
 import { fetchLoggedInUserAsync } from "./features/user/userSlice";
 import { fetchWishListByUserIdAsync } from "./features/wishList/wishListSlice";
-import LoginPage from "./pages/LoginPage";
-
+import { router } from "./Routes";
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
@@ -23,15 +21,15 @@ function App() {
   }, [user]);
 
   useEffect(() => {
-    dispatch(checkAuthAsync());
+    // dispatch(checkAuthAsync());
   }, []);
-
+  console.log(userChecked)
   return (
     <div className="dark:bg-gray-900">
-      {userChecked
-        ? <RouterProvider router={router} />
-        : <LoginPage></LoginPage>
-      }
+      {/* {userChecked? */}
+       <RouterProvider router={router} />
+        {/* : <div className='col-span-1 lg:col-span-3'><div className="loader"></div></div> */}
+      {/* } */}
 
     </div>
   );

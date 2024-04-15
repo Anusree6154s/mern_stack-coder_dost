@@ -49,7 +49,7 @@ exports.createUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
-  // console.log("req.user: ", req.user)
+  console.log("req.user: ", req.user)
   try {
     res
       .cookie("jwt", req.user.token, {
@@ -57,7 +57,7 @@ exports.loginUser = async (req, res) => {
         httpOnly: true,
       })
       .status(201)
-      .json(req.user);
+      .json(req.user.info);
   } catch (error) {
     res.status(400).json(error);
   }
@@ -67,8 +67,10 @@ exports.checkAuth = async (req, res) => {
   console.log("req.user: ", req.user)
   console.log("yes")
   if (req.user) {
+    console.log("yes")
     res.json(req.user);
   } else {
+    console.log("problem")
     res.sendStatus(401);
   }
 };

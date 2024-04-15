@@ -1,10 +1,8 @@
-import { loadStripe } from '@stripe/stripe-js';
-
 
 export function createOrder(item) {
     console.log("orderItem: ", item)
     return new Promise(async (resolve) => {
-        const response = await fetch('/orders', {
+        const response = await fetch('http://localhost:8080/orders', {
             method: 'POST',
             body: JSON.stringify(item),
             headers: { 'content-type': 'application/json' }
@@ -19,7 +17,7 @@ export function makePayment(item) {
     console.log("orderItem: ", item)
     return new Promise(async (resolve) => {
         // const stripe = await loadStripe('pk_test_51OzsYKSEvg4ni96G0o8oXWwkoOKQ4IgvrNnPF86rxihl5866nDtsS6LzY8i6HEpgvukiPOgofvzO3qUj1yW1E1Wy00BsBbS4Jo');
-        const response = await fetch('/create-payment-intent', {
+        const response = await fetch('http://localhost:8080/create-payment-intent', {
             method: 'POST',
             body: JSON.stringify(item),
             headers: { 'content-type': 'application/json' }
