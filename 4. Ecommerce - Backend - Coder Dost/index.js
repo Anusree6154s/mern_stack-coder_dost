@@ -241,7 +241,7 @@ server.get('/', (req, res) => {
     res.json({ status: 'success' })
 })
 
-
+server.set("trust proxy", 1)
 server.listen(process.env.PORT, () => {
     console.log('server started')
 })

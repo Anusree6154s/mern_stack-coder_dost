@@ -1,7 +1,10 @@
+import { BASE_URL } from '../../app/constants';
+
+
 export function addToWishList(item) {
   console.log(item)
   return new Promise(async (resolve) => {
-    const response = await fetch('http://localhost:8080/wishlist', {
+    const response = await fetch(BASE_URL + '/wishlist', {
       method: 'POST',
       body: JSON.stringify(item),
       headers: { 'content-type': 'application/json' }
@@ -14,7 +17,7 @@ export function addToWishList(item) {
 
 export function fetchWishListByUserId() {
   return new Promise(async (resolve) => {
-    const response = await fetch('http://localhost:8080/wishlist')
+    const response = await fetch(BASE_URL + '/wishlist')
     const data = await response.json()
     resolve({ data })
   });
@@ -23,7 +26,7 @@ export function fetchWishListByUserId() {
 
 export function deleteItemFromWishList(itemId) {
   return new Promise(async (resolve) => {
-    const response = await fetch('http://localhost:8080/wishlist/' + itemId, {
+    const response = await fetch(BASE_URL + '/wishlist/' + itemId, {
       method: 'DELETE',
       headers: { 'content-type': 'application/json' }
     });

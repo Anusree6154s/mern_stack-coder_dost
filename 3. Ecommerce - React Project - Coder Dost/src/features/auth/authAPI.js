@@ -1,7 +1,9 @@
+import { BASE_URL } from '../../app/constants';
+
 export function createUser(userData) {
   console.log(userData)
   return new Promise(async (resolve) => {
-    const response = await fetch('http://localhost:8080/auth/signup', {
+    const response = await fetch(BASE_URL + '/auth/signup', {
       method: 'POST',
       body: JSON.stringify(userData),
       headers: { 'content-type': 'application/json' }
@@ -11,15 +13,13 @@ export function createUser(userData) {
   });
 }
 
-
 export function LoginUser(loginInfo) {
   return new Promise(async (resolve, reject) => {
     const email = loginInfo.email
     const password = loginInfo.password
-    const response = await fetch('http://localhost:8080/auth/login', {
+    const response = await fetch(BASE_URL + '/auth/login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
-      credentials: "include",
       headers: { 'content-type': 'application/json' }
     })
     if (response.ok) {
@@ -35,7 +35,7 @@ export function LoginUser(loginInfo) {
 
 export function checkAuth() {
   return new Promise(async (resolve, reject) => {
-    const response = await fetch('http://localhost:8080/auth/check')
+    const response = await fetch(BASE_URL + '/auth/check')
     if (response.ok) {
       const data = await response.json()
       resolve({ data })
@@ -46,13 +46,10 @@ export function checkAuth() {
   });
 }
 
-
-
-
 export function sendOTP(item) {
   return new Promise(async (resolve, reject) => {
     console.log(item)
-    const response = await fetch('http://localhost:8080/auth/sendOTP', {
+    const response = await fetch(BASE_URL + '/auth/sendOTP', {
       method: 'POST',
       body: JSON.stringify(item),
       headers: { 'content-type': 'application/json' }
@@ -72,7 +69,7 @@ export function sendOTP(item) {
 export function resetPassword(item) {
   console.log(item)
   return new Promise(async (resolve) => {
-    const response = await fetch('http://localhost:8080/auth/resetpassword/' + item.userId, {
+    const response = await fetch(BASE_URL + '/auth/resetpassword/' + item.userId, {
       method: 'PATCH',
       body: JSON.stringify({ password: item.password }),
       headers: { 'content-type': 'application/json' }
@@ -85,7 +82,7 @@ export function resetPassword(item) {
 export function updateUser(update) {
   console.log("update: ", update)
   return new Promise(async (resolve) => {
-    const response = await fetch('http://localhost:8080/users/user/' + update.id, {
+    const response = await fetch(BASE_URL + '/users/user/' + update.id, {
       method: 'PATCH',
       body: JSON.stringify(update),
       headers: { 'content-type': 'application/json' }
