@@ -70,7 +70,7 @@ passport.use('local', new LocalStrategy(
                     console.log("local called4")
                     const token = jwt.sign(santizeUser(user), secretKey);
                     console.log(token)
-                    return done(null, {info:santizeUser(user), token:token}) //this line sends to serializer
+                    return done(null, { info: santizeUser(user), token: token }) //this line sends to serializer
                     // return done(null, santizeUser(user)) //this line sends to serializer
                 }
             });
@@ -112,9 +112,9 @@ passport.use('jwt', new JwtStrategy(opts, async function (jwt_payload, done) {
 }));
 
 
-console.log(path.resolve(__dirname, 'client/build'))
+console.log(path.resolve(__dirname, '..', 'client/build'))
 //middlewares
-server.use(express.static(path.resolve(__dirname, 'client/build')))
+server.use(express.static(path.resolve(__dirname, '..', 'client/build')))
 server.use(cookieParser()); //to get cookies in  req.cookies["jwt"] in 
 server.use(cors({ exposedHeaders: ['X-Total-Count'] }))
 server.use(express.json())//to parse request body
@@ -129,7 +129,7 @@ server.use('/wishlist', isAuth(), wishListRouter.router)
 server.use('/orders', isAuth(), orderRouter.router)
 
 // this line we add to make react router work in case of other routes doesnt match
-server.get('*', (req, res) => res.sendFile(path.resolve('build', 'index.html')));
+server.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '..', 'client/build', 'index.html')));
 
 
 //payments
