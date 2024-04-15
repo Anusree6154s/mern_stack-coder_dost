@@ -111,6 +111,8 @@ passport.use('jwt', new JwtStrategy(opts, async function (jwt_payload, done) {
 
 }));
 
+
+console.log(path.resolve(__dirname, 'client/build'))
 //middlewares
 server.use(express.static(path.resolve(__dirname, 'client/build')))
 server.use(cookieParser()); //to get cookies in  req.cookies["jwt"] in 
