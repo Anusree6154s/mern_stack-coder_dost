@@ -112,7 +112,7 @@ passport.use('jwt', new JwtStrategy(opts, async function (jwt_payload, done) {
 }));
 
 //middlewares
-server.use(express.static(path.resolve(__dirname, 'Client/build')))
+server.use(express.static(path.resolve(__dirname, 'client/build')))
 server.use(cookieParser()); //to get cookies in  req.cookies["jwt"] in 
 server.use(cors({ exposedHeaders: ['X-Total-Count'] }))
 server.use(express.json())//to parse request body
