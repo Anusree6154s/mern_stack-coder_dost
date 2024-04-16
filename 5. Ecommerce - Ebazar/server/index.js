@@ -16,7 +16,6 @@ const { isAuth } = require('./services/common.js');
 var cookieParser = require('cookie-parser');//import related to cookies
 
 const { authenticateSession, sessionMiddleware } = require('./services/passport.js');
-const { webhookCallback } = require('./controller/Payment.js');
 
 
 const server = express()
