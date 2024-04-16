@@ -5,8 +5,6 @@ const stripe = require("stripe")(process.env.STRIPE);
 
 exports.createPaymentIntentCallback = async (req, res) => {
 
-    console.log("stripe body:", req.body)
-
     try {
         const customer = await stripe.customers.create({
             email: req.body.selectedAddress.email,

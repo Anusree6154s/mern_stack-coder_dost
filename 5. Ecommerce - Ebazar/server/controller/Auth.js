@@ -49,7 +49,6 @@ exports.createUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
-  // console.log("req.user: ", req.user)
   try {
     res
       .cookie("jwt", req.user.token, {
@@ -65,7 +64,6 @@ exports.loginUser = async (req, res) => {
 
 exports.logoutUser = async (req, res) => {
   const token = jwt.sign({ id: null }, secretKey)
-  // console.log("logout jwt x sent")
   res
     .cookie("jwt", token, {
       expires: new Date(Date.now() + 3600000),
@@ -76,13 +74,9 @@ exports.logoutUser = async (req, res) => {
 };
 
 exports.checkAuth = async (req, res) => {
-  // console.log("checkAuth req.user: ", req.user)
-  // console.log("yes")
   if (req.user) {
-    // console.log("yes")
     res.json(req.user);
   } else {
-    // console.log("problem")
     res.sendStatus(401);
   }
 };
@@ -170,7 +164,6 @@ exports.resetPassword = async (req, res) => {
       async function (err, hashedPassword) {
         const data = await User.findByIdAndUpdate(id, { password: hashedPassword, salt }, { new: true });
         if (data) {
-          // console.log(data)
           res.send({ message: "Password has been reset" })
         } else {
           res.send({ err })

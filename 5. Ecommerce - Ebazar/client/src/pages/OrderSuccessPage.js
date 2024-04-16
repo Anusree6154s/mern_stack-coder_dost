@@ -9,11 +9,6 @@ function OrderSuccessPage() {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(resetOrder())
-        const searchParams = new URLSearchParams(window.location.search);
-        const redirectStatus = searchParams.get('redirect_status');
-        
-        console.log('Redirect Status:', redirectStatus);
-        console.log(params)
     }, [])
    
     return (

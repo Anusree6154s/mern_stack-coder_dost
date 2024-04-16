@@ -21,10 +21,7 @@ export default function NavBar({ children, name, preview }) {
   const [dark, setDark] = useState(false)
 
   let userNavigation
-  // useEffect(() => {
-  console.log("!")
   if (user) {
-    console.log("2")
     if (user.role === 'user') {
       userNavigation = [
         { name: 'Your Profile', link: '/profile' },
@@ -40,7 +37,6 @@ export default function NavBar({ children, name, preview }) {
     }
 
   }
-  // }, [user])
 
 
 
@@ -69,8 +65,6 @@ export default function NavBar({ children, name, preview }) {
     }
   }, [])
 
-  console.log(user)
-  console.log(userNavigation)
 
   return (
     <>

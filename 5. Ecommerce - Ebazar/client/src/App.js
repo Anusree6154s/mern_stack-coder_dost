@@ -25,7 +25,7 @@ function App() {
     dispatch(checkAuthAsync());
   }, []);
 
-  console.log(user)
+
   return (
     <div className="dark:bg-gray-900">
        <RouterProvider router={router} />
