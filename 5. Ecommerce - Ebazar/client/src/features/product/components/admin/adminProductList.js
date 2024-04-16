@@ -77,7 +77,7 @@ function AdminProductList() {
 
   useEffect(() => {
     const pagination = { _page: page }
-    dispatch(fetchProductsByFiltersAsync({ role: user.role, filter, sort, pagination }))
+    user && dispatch(fetchProductsByFiltersAsync({ role: user.role, filter, sort, pagination }))
   }, [user, filter, sort, page])
 
   useEffect(() => {

@@ -19,7 +19,7 @@ function ProductDetail() {
     const params = useParams()
 
     const [showAlert, setShowAlert] = useState(null)
-    const [quantity, setQuantity] = useState(0)
+    const [quantity, setQuantity] = useState(1)
 
     const wishList = useSelector(selectWishList)
     const cartItems = useSelector(selectItems)

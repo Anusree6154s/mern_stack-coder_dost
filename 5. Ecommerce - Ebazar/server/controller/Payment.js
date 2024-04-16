@@ -1,9 +1,12 @@
 require("dotenv").config();
-
-//payments
 const stripe = require("stripe")(process.env.STRIPE);
 
+//payments
+
 exports.createPaymentIntentCallback = async (req, res) => {
+
+    console.log("stripe body:", req.body)
+
     try {
         const customer = await stripe.customers.create({
             email: req.body.selectedAddress.email,
@@ -32,9 +35,8 @@ exports.createPaymentIntentCallback = async (req, res) => {
                 enabled: true,
             },
         });
-        console.log(paymentIntent.client_secret)
         res.send({
-            clientSecret: paymentIntent.client_secret,
+            clientSecret: paymentIntent.client_secret
         })
 
     } catch (error) {
@@ -72,12 +74,12 @@ exports.webhookCallback = (request, response) => {
         eventType = request.body.type
     }
     
-    console.log("eventType: ", eventType)
+    // console.log("eventType: ", eventType)
     if (eventType === 'payment_intent.succeeded') {
         stripe.customers
             .retrieve(data.customer)
             .then(customer => {
-                console.log("data: ", data)
+                // console.log("data: ", data)
             })
             .catch(error => {
                 console.error('Error retrieving customer:', error);

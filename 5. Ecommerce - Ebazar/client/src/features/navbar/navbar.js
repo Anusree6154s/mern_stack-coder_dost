@@ -20,16 +20,28 @@ export default function NavBar({ children, name, preview }) {
 
   const [dark, setDark] = useState(false)
 
+  let userNavigation
+  // useEffect(() => {
+  console.log("!")
+  if (user) {
+    console.log("2")
+    if (user.role === 'user') {
+      userNavigation = [
+        { name: 'Your Profile', link: '/profile' },
+        { name: 'My Orders', link: '/my-orders' },
+        { name: 'Sign out', link: '/logout' },
+      ]
+    } else {
+      userNavigation = [
+        { name: 'Your Profile', link: '/admin/profile' },
+        { name: 'Orders', link: '/admin/orders' },
+        { name: 'Sign out', link: '/logout' },
+      ]
+    }
 
-  const userNavigation = user.role === 'user' ? [
-    { name: 'Your Profile', link: '/profile' },
-    { name: 'My Orders', link: '/my-orders' },
-    { name: 'Sign out', link: '/logout' },
-  ] : [
-    { name: 'Your Profile', link: '/admin/profile' },
-    { name: 'Orders', link: '/admin/orders' },
-    { name: 'Sign out', link: '/logout' },
-  ]
+  }
+  // }, [user])
+
 
 
   const handleTheme = () => {
@@ -57,9 +69,12 @@ export default function NavBar({ children, name, preview }) {
     }
   }, [])
 
+  console.log(user)
+  console.log(userNavigation)
+
   return (
     <>
-      <div className="min-h-full">
+      {userNavigation && <div className="min-h-full">
         <Disclosure as="nav" className="bg-gray-800 dark:bg-gray-900">
           {({ open }) => (
             <>
@@ -225,8 +240,8 @@ export default function NavBar({ children, name, preview }) {
                       <div className="text-base font-medium leading-none text-white">{user.name}</div>
                       <div className="text-sm font-medium leading-none text-gray-400">{user.email}</div>
                     </div>
-
                   </div>
+
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item, index) => (
                       <Link key={index} to={item.link}>
@@ -257,7 +272,7 @@ export default function NavBar({ children, name, preview }) {
             {children}
           </div>
         </main>
-      </div >
+      </div >}
     </>
   )
 }

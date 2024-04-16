@@ -22,12 +22,6 @@ export function makePayment(item) {
             headers: { 'content-type': 'application/json' }
         })
         const data = await response.json()
-        // const result = stripe.redirectToCheckout({
-        //     sessionId: data.id
-        // })
-        // if (result.error) {
-        //     console.log(result.error)
-        // }
         resolve({ data: data.clientSecret })
     }
     );

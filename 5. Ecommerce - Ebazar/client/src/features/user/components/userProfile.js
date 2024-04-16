@@ -32,7 +32,7 @@ function UserProfile() {
 
 
   const dispatch = useDispatch()
-  const user = useSelector(selectUserInfo)
+  const user = useSelector(selectLoggedInUser)
 
   const [visibilityIndex, setVisibilityIndex] = useState(null)
   const [addFormVisibility, setaddFormVisibility] = useState(false)

@@ -54,7 +54,7 @@ function Checkout() {
 
             <Link to='/cart' className='p-2 mb-5 inline-block rounded-md hover:bg-gray-50  dark:text-gray-300 dark:hover:bg-gray-700' ><ArrowLeftIcon className='h-6 w-6 inline-block '></ArrowLeftIcon> Back</Link>
             
-            <div className=" grid gap-10 max-w-7xl  lg:grid-cols-5">
+            {user && <div className=" grid gap-10 max-w-7xl  lg:grid-cols-5">
                 <div className='lg:col-span-3 px-4 py-6 sm:px-6 lg:px-8 bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900'>
                     <form noValidate onSubmit={handleSubmit((data) => {
                         dispatch(updateUserAsync({ ...user, addresses: [...user.addresses, data] }))
@@ -382,7 +382,7 @@ function Checkout() {
 
                 </div>
 
-            </div>
+            </div>}
         </div >
     );
 }

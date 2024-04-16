@@ -33,7 +33,7 @@ exports.authenticateSession = () => {
 passport.use('local', new LocalStrategy(
     { usernameField: "email" },
     async function (email, password, done) {
-        console.log("called")
+        // console.log("called")
         try {
             const user = await User.findOne({ email: email }).exec()
             if (!user) {
@@ -44,6 +44,7 @@ passport.use('local', new LocalStrategy(
                     done(null, false, { message: 'Invalid credentials' })
                 } else {
                     const token = jwt.sign(santizeUser(user), secretKey);
+                    // console.log(token)
                     return done(null, { info: santizeUser(user), token: token }) //this line sends to serializer
                 }
             });
@@ -55,24 +56,24 @@ passport.use('local', new LocalStrategy(
 
 
 passport.use('jwt', new JwtStrategy(opts, async function (jwt_payload, done) {
-    console.log(jwt_payload)
+    // console.log(jwt_payload)
     let user = null
     if (jwt_payload.id !== null) {
         user = await User.findOne({ _id: jwt_payload.id });
     }
 
-    console.log(user)
+    // console.log(user)
     try {
         if (user) {
-            console.log("1")
+            // console.log("1")
             return done(null, santizeUser(user)); //this calls serializer
         } else {
-            console.log("2")
+            // console.log("2")
             return done(null, false);
             // or you could create a new account
         }
     } catch (error) {
-        console.log("3")
+        // console.log("3")
         return done(err, false);
     }
 }));

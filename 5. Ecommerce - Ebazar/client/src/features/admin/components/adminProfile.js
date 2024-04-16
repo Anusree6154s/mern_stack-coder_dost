@@ -17,7 +17,7 @@ function AdminProfile() {
     } = useForm()
 
     const dispatch = useDispatch()
-    const user = useSelector(selectUserInfo)
+    const user = useSelector(selectLoggedInUser)
 
     const [addFormVisibility, setaddFormVisibility] = useState(false)
 
@@ -65,8 +65,9 @@ function AdminProfile() {
 
     }
 
+    
     return (
-        <>
+         <>
             <div className="mb-5 flex justify-between">
                 <Link to='/admin' className='p-2 rounded-md hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 inline-block' ><ArrowLeftIcon className='h-6 w-6 inline '></ArrowLeftIcon> Back</Link>
 

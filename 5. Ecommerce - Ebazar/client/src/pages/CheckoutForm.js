@@ -16,6 +16,7 @@ export default function CheckoutForm() {
   const [isLoading, setIsLoading] = useState(false);
   const currentOrder = useSelector(selectCurrentOrder)
 
+
   useEffect(() => {
     if (!stripe) {
       return;
@@ -48,7 +49,6 @@ export default function CheckoutForm() {
     });
   }, [stripe]);
 
-console.log("checkout form ")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,7 +58,6 @@ console.log("checkout form ")
     }
 
     setIsLoading(true);
-    console.log(currentOrder)
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
@@ -66,7 +65,6 @@ console.log("checkout form ")
       },
     });
 
-    console.log(error)
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error.message);
     } else {
@@ -93,3 +91,6 @@ console.log("checkout form ")
     </form>
   );
 }
+
+
+

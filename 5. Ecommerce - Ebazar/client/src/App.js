@@ -16,18 +16,19 @@ function App() {
     if (user) {
       dispatch(fetchItemsByUserIdAsync());
       dispatch(fetchWishListByUserIdAsync())
-      dispatch(fetchLoggedInUserAsync());
+      
     }
   }, [user]);
 
   useEffect(() => {
+    dispatch(fetchLoggedInUserAsync());
     dispatch(checkAuthAsync());
   }, []);
 
-
+  console.log(user)
   return (
     <div className="dark:bg-gray-900">
-      <RouterProvider router={router} />
+       <RouterProvider router={router} />
     </div>
   );
 }

@@ -65,9 +65,9 @@ exports.loginUser = async (req, res) => {
 
 exports.logoutUser = async (req, res) => {
   const token = jwt.sign({ id: null }, secretKey)
-  console.log("logout jwt x sent")
+  // console.log("logout jwt x sent")
   res
-    .cookie("jwt", 'x', {
+    .cookie("jwt", token, {
       expires: new Date(Date.now() + 3600000),
       httpOnly: true,
     })
@@ -76,13 +76,13 @@ exports.logoutUser = async (req, res) => {
 };
 
 exports.checkAuth = async (req, res) => {
-  console.log("checkAuth req.user: ", req.user)
-  console.log("yes")
+  // console.log("checkAuth req.user: ", req.user)
+  // console.log("yes")
   if (req.user) {
-    console.log("yes")
+    // console.log("yes")
     res.json(req.user);
   } else {
-    console.log("problem")
+    // console.log("problem")
     res.sendStatus(401);
   }
 };
