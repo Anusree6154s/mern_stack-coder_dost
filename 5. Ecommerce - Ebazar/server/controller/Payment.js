@@ -44,49 +44,49 @@ exports.createPaymentIntentCallback = async (req, res) => {
     }
 }
 
-//webhook
-let endpointSecret;
-// // This is your Stripe CLI webhook secret for testing your endpoint locally.
-//  endpointSecret =process.env.ENDPOINT_SECRET
-exports.webhookCallback = (request, response) => {
-    const sig = request.headers['stripe-signature'];
+// //webhook
+// let endpointSecret;
+// // // This is your Stripe CLI webhook secret for testing your endpoint locally.
+// //  endpointSecret =process.env.ENDPOINT_SECRET
+// exports.webhookCallback = (request, response) => {
+//     const sig = request.headers['stripe-signature'];
 
-    let data, eventType;
+//     let data, eventType;
 
-    // console.log("request.body: ", request.body)
-    console.log("sig: ", sig)
-    if (endpointSecret) {
-        let event;
+//     // console.log("request.body: ", request.body)
+//     console.log("sig: ", sig)
+//     if (endpointSecret) {
+//         let event;
         
-        try {
-            event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-            console.log("webhook verified")
-        } catch (err) {
-            console.log("webhook error: ", err)
-            response.status(400).send(`Webhook Error: ${err.message}`);
-            return;
-        }
+//         try {
+//             event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+//             console.log("webhook verified")
+//         } catch (err) {
+//             console.log("webhook error: ", err)
+//             response.status(400).send(`Webhook Error: ${err.message}`);
+//             return;
+//         }
         
-        data = event.data.object
-        eventType = event.type
-    } else {
-        data = request.body.data.object
-        eventType = request.body.type
-    }
+//         data = event.data.object
+//         eventType = event.type
+//     } else {
+//         data = request.body.data.object
+//         eventType = request.body.type
+//     }
     
-    // console.log("eventType: ", eventType)
-    if (eventType === 'payment_intent.succeeded') {
-        stripe.customers
-            .retrieve(data.customer)
-            .then(customer => {
-                // console.log("data: ", data)
-            })
-            .catch(error => {
-                console.error('Error retrieving customer:', error);
-            })
-    }
+//     // console.log("eventType: ", eventType)
+//     if (eventType === 'payment_intent.succeeded') {
+//         stripe.customers
+//             .retrieve(data.customer)
+//             .then(customer => {
+//                 // console.log("data: ", data)
+//             })
+//             .catch(error => {
+//                 console.error('Error retrieving customer:', error);
+//             })
+//     }
 
-    // Return a 200 response to acknowledge receipt of the event
-    response.send().end();
-}
+//     // Return a 200 response to acknowledge receipt of the event
+//     response.send().end();
+// }
 

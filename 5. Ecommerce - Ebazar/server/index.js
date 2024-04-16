@@ -32,7 +32,7 @@ server.use(express.static(path.resolve(__dirname, '..', 'client/build')))
 server.use(cookieParser()); //to get cookies in  req.cookies["jwt"] in 
 server.use(cors({ exposedHeaders: ['X-Total-Count'] }))
 server.use(express.json()) //to parse request body
-server.use(express.raw({ type: 'application/json' }))
+// server.use(express.raw({ type: 'application/json' })) //for webhook
 
 server.use('/products', isAuth(), productsRouter.router)
 server.use('/categories', isAuth(), categoriesRouter.router)
@@ -43,8 +43,6 @@ server.use('/cart', isAuth(), cartRouter.router)
 server.use('/wishlist', isAuth(), wishListRouter.router)
 server.use('/orders', isAuth(), orderRouter.router)
 server.use('/', paymentRouter.router)
-
-server.post('/webhook', express.raw({ type: 'application/json' }), webhookCallback)
 // this line we add to make react router work in case of other routes doesnt match
 server.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '..', 'client/build', 'index.html')));
 
