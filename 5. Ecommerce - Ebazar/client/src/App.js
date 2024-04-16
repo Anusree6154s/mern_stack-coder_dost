@@ -3,14 +3,14 @@ import "./styles/App.css";
 import { Navigate, RouterProvider } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchItemsByUserIdAsync, } from "./features/cart/cartSlice";
-import { checkAuthAsync, selectLoggedInUser, selectUserChecked, } from "./features/auth/authSlice";
+import { checkAuthAsync, selectAuthSliceStatus, selectLoggedInUser, selectUserChecked, } from "./features/auth/authSlice";
 import { fetchLoggedInUserAsync } from "./features/user/userSlice";
 import { fetchWishListByUserIdAsync } from "./features/wishList/wishListSlice";
 import { router } from "./Routes";
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser);
-  const userChecked = useSelector(selectUserChecked);
+  const AuthStatus = useSelector(selectAuthSliceStatus);
 
   useEffect(() => {
     if (user) {
@@ -21,16 +21,13 @@ function App() {
   }, [user]);
 
   useEffect(() => {
-    // dispatch(checkAuthAsync());
+    dispatch(checkAuthAsync());
   }, []);
-  console.log(userChecked)
+
+
   return (
     <div className="dark:bg-gray-900">
-      {/* {userChecked? */}
-       <RouterProvider router={router} />
-        {/* : <div className='col-span-1 lg:col-span-3'><div className="loader"></div></div> */}
-      {/* } */}
-
+      <RouterProvider router={router} />
     </div>
   );
 }

@@ -20,9 +20,7 @@ export const createOrderAsync = createAsyncThunk(
 export const makePaymentAsync = createAsyncThunk(
     'orders/makePayment',
     async (item) => {
-        console.log("item: ", item)
         const response = await makePayment(item);
-        console.log("response.data: ", response.data)
         return response.data
     }
 );

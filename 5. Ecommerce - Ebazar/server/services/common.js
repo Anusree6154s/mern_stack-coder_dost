@@ -1,7 +1,6 @@
 const passport = require('passport');
 
 exports.isAuth = (req, res, done) => {
-    console.log("authenticating")
     return passport.authenticate('jwt')
 }
 

@@ -56,7 +56,6 @@ function EditProductForm(path) {
 
     const searchParams = new URLSearchParams(useLocation().search);
     const param = searchParams.get('path')
-    console.log(searchParams)
 
     return (
         <>

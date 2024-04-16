@@ -23,7 +23,6 @@ function ProductDetail() {
         dispatch(resetNewProduct())
     }, [])
 
-    console.log(product)
 
     const handleDelete = () => {
         const product = { ...product }

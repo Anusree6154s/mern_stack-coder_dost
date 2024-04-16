@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { ArrowLeftIcon } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLoggedInUserOrdersAsync, selectUserOrders, selectUserOrdersStatus } from "../userSlice";
+import { fetchLoggedInUserOrdersAsync, selectUserOrders } from "../userSlice";
 import { selectLoggedInUser } from "../../auth/authSlice";
 
 //TODO: add arrival date in form of Thu, 24 Apr 2024
@@ -11,14 +11,14 @@ function UserOrders() {
     const dispatch = useDispatch()
     const user = useSelector(selectLoggedInUser)
     const orders = useSelector(selectUserOrders)
-    const status = useSelector(selectUserOrdersStatus)
     useEffect(() => {
         dispatch(fetchLoggedInUserOrdersAsync(user.id))
     }, [])
 
+
     return (
         <>
-            <Link to='/' className='p-2 mb-5 rounded-md hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 inline-block' ><ArrowLeftIcon className='h-6 w-6 inline '></ArrowLeftIcon> Back</Link> 
+            <Link to='/' className='p-2 mb-5 rounded-md hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 inline-block' ><ArrowLeftIcon className='h-6 w-6 inline '></ArrowLeftIcon> Back</Link>
 
             {orders
                 && orders.map((order, index) =>
@@ -52,8 +52,8 @@ function UserOrders() {
                                                         <p className="ml-4">₹ {item.product.price * item.quantity}</p>
                                                     </div>
                                                     <p className="dark:text-gray-300">Qty: {item.product.quantity}</p>
-                                                    <p className={`mt-1 text-sm ${order.status === 'Pending' ? 'text-red-700 dark:text-orange-500' : 'Dispatched'?'text-yellow-600': 'text-green-600'} `}>Order Status: {order.status}</p>
-                                                    {order.date && <p className="mt-1 text-sm dark:text-gray-400"> Delivery Expected By:<span className="font-bold dark:text-gray-300 "> {`${parseInt(order.date.split("-")[0]) + 7}-${order.date.substring(3)}`}</span></p>}
+                                                    <p className={`mt-1 text-sm ${order.status === 'Pending' ? 'text-red-700 dark:text-orange-500' : order.status === 'Dispatched' ? 'text-yellow-600' : 'text-green-600'} `}>Order Status: {order.status}</p>
+                                                    {order.date && order.status !== 'Delivered' && <p className="mt-1 text-sm dark:text-gray-400"> Delivery Expected By:<span className="font-bold dark:text-gray-300 "> {`${parseInt(order.date.split("-")[0]) + 7}-${order.date.substring(3)}`}</span></p>}
                                                 </div>
 
                                             </div>
@@ -78,7 +78,7 @@ function UserOrders() {
 
                         {order.selectedAddress &&
                             <div className="border dark:border-gray-500 mt-6 space-y-2 items-baseline p-5 px-4 py-6 sm:px-6">
-                                <p className="text-gray-900 dark:text-gray-300 font-bold text-lg">Shipping to:</p>
+                                <p className="text-gray-900 dark:text-gray-300 font-bold text-lg">{order.status !== 'Delivered' ? 'Shipping to:' : 'Shipped To:'}</p>
                                 <div className=" flex justify-between   ">
                                     <div className="hidden shrink-0 sm:flex sm:flex-col  ">
                                         <p className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">{order.selectedAddress.name}</p>
@@ -96,7 +96,6 @@ function UserOrders() {
                 )
 
             }
-            {/* {status==='pending' && <div className="loader"></div>} */}
         </>
     );
 }

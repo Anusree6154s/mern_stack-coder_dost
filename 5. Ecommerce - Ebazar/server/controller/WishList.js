@@ -5,7 +5,6 @@ exports.addToWishList = async (req, res) => {
     try {
         const data = await wishList.save()
         await data.populate('product')
-        console.log(data)
         res.status(201).json(data)
     } catch (error) {
         res.status(400).json(error)

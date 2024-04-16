@@ -44,7 +44,6 @@ function Checkout() {
         dispatch(resetCartAsync(user.id))  //reset cart
     }
 
-    console.log(currentOrder, items)
 
     
     return (
@@ -58,7 +57,6 @@ function Checkout() {
             <div className=" grid gap-10 max-w-7xl  lg:grid-cols-5">
                 <div className='lg:col-span-3 px-4 py-6 sm:px-6 lg:px-8 bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900'>
                     <form noValidate onSubmit={handleSubmit((data) => {
-                        console.log(data)
                         dispatch(updateUserAsync({ ...user, addresses: [...user.addresses, data] }))
                         reset()
                     })}>

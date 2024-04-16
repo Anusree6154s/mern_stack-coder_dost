@@ -6,6 +6,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { selectCurrentOrder } from "../features/orders/ordersSlice";
 import { useSelector } from "react-redux";
+import { BASE_URL } from '../app/constants';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -29,6 +30,7 @@ export default function CheckoutForm() {
     }
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+      console.log(paymentIntent)
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
@@ -46,6 +48,8 @@ export default function CheckoutForm() {
     });
   }, [stripe]);
 
+console.log("checkout form ")
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -54,11 +58,11 @@ export default function CheckoutForm() {
     }
 
     setIsLoading(true);
-
+    console.log(currentOrder)
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `http://localhost:3000/order-success/${currentOrder.id}`,
+        return_url: `${BASE_URL}/order-success/${currentOrder.id}`,
       },
     });
 

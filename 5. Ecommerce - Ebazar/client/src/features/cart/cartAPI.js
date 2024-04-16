@@ -21,7 +21,6 @@ export function fetchItemsByUserId() {
 }
 
 export function updateCart(update) {
-  console.log(update)
   return new Promise(async (resolve) => {
     const response = await fetch(BASE_URL + '/cart/' + update.id, {
       method: 'PATCH',

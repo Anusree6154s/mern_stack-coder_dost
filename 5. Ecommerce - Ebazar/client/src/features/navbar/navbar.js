@@ -7,17 +7,7 @@ import { selectItems } from '../cart/cartSlice'
 import { selectLoggedInUser } from '../auth/authSlice'
 
 
-//TODO:last page to be updated
 
-// const navigation = [
-//   { name: 'Dashboard', href: '#', current: true },
-//   { name: 'Team', href: '#', current: false },
-//   { name: 'Projects', href: '#', current: false },
-//   { name: 'Calendar', href: '#', current: false },
-//   { name: 'Reports', href: '#', current: false },
-// ]
-
-const navigation = null
 
 
 function classNames(...classes) {
@@ -29,6 +19,7 @@ export default function NavBar({ children, name, preview }) {
   const items = useSelector(selectItems)
 
   const [dark, setDark] = useState(false)
+
 
   const userNavigation = user.role === 'user' ? [
     { name: 'Your Profile', link: '/profile' },
@@ -55,26 +46,14 @@ export default function NavBar({ children, name, preview }) {
 
   useEffect(() => {
     if (localStorage.getItem('color-theme')) {
-      if (localStorage.getItem('color-theme') === 'light') {
+      if (localStorage.getItem('color-theme') === 'dark') {
         document.documentElement.classList.add('dark');
-        localStorage.setItem('color-theme', 'dark');
         setDark(true)
       } else {
         document.documentElement.classList.remove('dark');
-        localStorage.setItem('color-theme', 'light');
-        setDark(false)
       }
     } else {
-      // If NOT set via local storage previously
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('color-theme', 'light');
-        setDark(false)
-      } else {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('color-theme', 'dark');
-        setDark(true)
-      }
+      localStorage.setItem('color-theme', 'light');
     }
   }, [])
 
@@ -95,12 +74,26 @@ export default function NavBar({ children, name, preview }) {
                   <div className="hidden md:block">
                     <div className="ml-4 flex gap-2 items-center md:ml-6 ">
 
-                      <button id="theme-toggle" onClick={handleTheme} type="button" className="flex items-center text-gray-400  hover:text-gray-100  focus:outline-none focus:ring-4 focus:ring-transparent rounded-lg text-sm p-2.5 dark:border-gray-600">
+                      <button
+                        id="theme-toggle"
+                        onClick={handleTheme}
+                        type="button"
+                        className="flex items-center text-gray-400  hover:text-gray-100  focus:outline-none focus:ring-4 focus:ring-transparent rounded-lg text-sm p-2.5 dark:border-gray-600">
                         {dark ? 'Light Mode' : 'Dark Mode'}
-                        <svg id="theme-toggle-dark-icon" className={`${dark ? 'hidden' : ''}  w-5 h-5 ml-2`} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <svg
+                          id="theme-toggle-dark-icon"
+                          className={`${dark ? 'hidden' : ''}  w-5 h-5 ml-2`}
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg">
                           <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                         </svg>
-                        <svg id="theme-toggle-light-icon" className={`${dark ? '' : 'hidden'}  w-5 h-5 ml-2`} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <svg
+                          id="theme-toggle-light-icon"
+                          className={`${dark ? '' : 'hidden'}  w-5 h-5 ml-2`}
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg">
                           <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fillRule="evenodd" clipRule="evenodd"></path>
                         </svg>
                       </button>
@@ -137,7 +130,7 @@ export default function NavBar({ children, name, preview }) {
                           <Menu.Button className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 dark:bg-gray-700">
                             <span className="absolute -inset-1.5" />
                             <span className="sr-only">Open user menu</span>
-                            <img className="h-8 w-8 rounded-full" src={user.image || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'} alt="" />
+                            <img className="h-8 w-8 rounded-full" src={user.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfZbXR5XmpH1OOJhigJF4nWkJIITHis1Y4dA&s'} alt="" />
                           </Menu.Button>
                         </div>
                         <Transition
@@ -185,16 +178,16 @@ export default function NavBar({ children, name, preview }) {
                         <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fillRule="evenodd" clipRule="evenodd"></path>
                       </svg>
                     </button>
-                    
+
                     <Link to='/wishlist' className={user.role === 'user' ? '' : "hidden"}>
-                        <button
-                          type="button"
-                          className=" rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-transparent  dark:bg-gray-900 dark:text-gray-400  dark:hover:text-gray-100  "
-                        >
-                          <span className="sr-only">View WishList</span>
-                          <HeartIcon className="h-6 w-6" aria-hidden="true" />
-                        </button>
-                      </Link>
+                      <button
+                        type="button"
+                        className=" rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none  focus:ring-transparent  dark:bg-gray-900 dark:text-gray-400  dark:hover:text-gray-100  "
+                      >
+                        <span className="sr-only">View WishList</span>
+                        <HeartIcon className="h-6 w-6" aria-hidden="true" />
+                      </button>
+                    </Link>
 
                     <Link to='/cart' className={user.role === 'user' ? '' : "hidden"}>
                       <button
@@ -223,26 +216,10 @@ export default function NavBar({ children, name, preview }) {
               </div>
 
               <Disclosure.Panel className="md:hidden">
-                <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-                  {navigation && navigation.map((item, index) => (
-                    <Link key={index} to={item.link}>
-                      <Disclosure.Button
-                        key={item.name}
-                        className={classNames(
-                          item.current ? 'bg-gray-900 text-white dark:bg-gray-700 dark:text-gray-200' : 'text-gray-300 hover:bg-gray-700 hover:text-white dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300',
-                          'block rounded-md px-3 py-2 text-base font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        {item.name}
-                      </Disclosure.Button>
-                    </Link>
-                  ))}
-                </div>
                 <div className="border-t border-gray-700 pb-3 pt-4">
                   <div className="flex items-center px-5">
                     <div className="flex-shrink-0">
-                      <img className="h-10 w-10 rounded-full" src={user.image || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'} alt="" />
+                      <img className="h-10 w-10 rounded-full" src={user.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfZbXR5XmpH1OOJhigJF4nWkJIITHis1Y4dA&s'} alt="" />
                     </div>
                     <div className="ml-3">
                       <div className="text-base font-medium leading-none text-white">{user.name}</div>

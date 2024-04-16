@@ -25,9 +25,8 @@ function AddProductForm() {
             {newProduct && <Navigate to={`/admin/product-detail/${newProduct.id}`}></Navigate>}
             <Link to='/admin' className='p-2 mb-5 rounded-md hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700 inline-block' ><ArrowLeftIcon className='h-6 w-6 inline '></ArrowLeftIcon> Back</Link> 
 
-            <div className='bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 mx-auto max-w-2xl py-10 px-12 lg:max-w-7xl border'>
+            <div className='bg-white dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900 mx-auto max-w-2xl py-10 px-12 lg:max-w-7xl'>
                 <form noValidate onSubmit={handleSubmit((data) => {
-                    console.log(data)
                     const product = { ...data }
                     product.images = [product['image-1'], product['image-2'], product['image-3'], product['image-4']]
                     product.rating = 0

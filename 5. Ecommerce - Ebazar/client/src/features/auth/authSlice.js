@@ -93,12 +93,15 @@ export const authSlice = createSlice({
       })
       .addCase(checkAuthAsync.pending, (state, action) => {
         state.status = 'loading';
-        state.userAuthenticated = false;
       })
       .addCase(checkAuthAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.loggedInUser = action.payload;
         state.userAuthenticated = true;
+      })
+      .addCase(checkAuthAsync.rejected, (state, action) => {
+        state.status = 'idle';
+        state.userAuthenticated = false;
       })
       .addCase(updateUserAsync.pending, (state) => {
         state.status = 'loading';
@@ -106,7 +109,6 @@ export const authSlice = createSlice({
       .addCase(updateUserAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.loggedInUser = action.payload
-        console.log(action.payload)
       })
       .addCase(signOutsAsync.pending, (state) => {
         state.status = 'loading';
@@ -116,11 +118,10 @@ export const authSlice = createSlice({
         state.loggedInUser = null
       })
       .addCase(sendOTPAsync.pending, (state, action) => {
-        state.status = 'idle';
+        state.status = 'loading';
       })
       .addCase(sendOTPAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        console.log(action.payload.id)
         state.user_id = action.payload.id
       })
   },
@@ -131,6 +132,7 @@ export const selectLoggedInUser = (state) => state.auth.loggedInUser;
 export const selectError = (state) => state.auth.error;
 export const selectUserChecked = (state) => state.auth.userAuthenticated;
 export const selectUserId = (state) => state.auth.user_id;
+export const selectAuthSliceStatus = (state) => state.auth.status;
 
 
 export default authSlice.reducer;

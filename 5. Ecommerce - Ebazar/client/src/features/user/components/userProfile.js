@@ -67,7 +67,7 @@ function UserProfile() {
   }
 
   const handleEditProfile = (data) => {
-    if (data.image2) {
+    if (data.image2.length!==0) {
       const reader = new FileReader();
       reader.readAsDataURL(data.image2[0]);
       reader.onload = (e) => dispatch(updateUserAsync({ ...user, name: data.name, image: data.image || e.target.result}))
@@ -332,7 +332,6 @@ function UserProfile() {
 
                 <div className="mt-2 space-y-6">
                   <ul role="list" className='flex flex-col gap-2'>
-                  {console.log(user)}
                     {user.addresses.map((address, index) => (
                       <li key={index} className='items-baseline border dark:border-transparent px-5 bg-white dark:bg-gray-800'>
                         <div className="flex justify-between items-baseline px-5">
@@ -368,7 +367,6 @@ function UserProfile() {
                         <form
                           noValidate
                           onSubmit={handleSubmit2((data) => {
-                            console.log("data: ", data)
                             handleEdit(data, index)
                             setVisibilityIndex(null)
                           })}

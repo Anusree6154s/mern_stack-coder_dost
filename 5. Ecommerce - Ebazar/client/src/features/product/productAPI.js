@@ -2,7 +2,6 @@ import { BASE_URL } from '../../app/constants';
 
 export function fetchProducts() {
   return new Promise(async (resolve) => {
-    //TODO: We will not hardcode server-url here
     const response = await fetch(BASE_URL + '/products')
     const data = await response.json()
     resolve(data)
@@ -11,7 +10,6 @@ export function fetchProducts() {
 
 export function fetchProductsById(id) {
   return new Promise(async (resolve) => {
-    //TODO: We will not hardcode server-url here
     const response = await fetch(BASE_URL + '/products/' + id)
     const data = await response.json()
     resolve(data)
@@ -19,11 +17,6 @@ export function fetchProductsById(id) {
 }
 
 export function fetchProductsByFilters(role, filter, sort, pagination) {
-  //filter={"category":["smartphones", "laptops"]}
-  //sort={_sort:"price", _order:"desc"}
-  //pagination={_page:1, _limit:10} //_paege=1&_limit=10
-
-  // TODO: on server we will support multi values for filter
   let queryString = ``
   for (let key in filter) {
     const categoryValues = filter[key]
@@ -89,7 +82,6 @@ export function editProduct(product) {
       headers: { 'content-type': 'application/json' }
     })
     const data = await response.json()
-    console.log("data: ", data)
     resolve(data)
   }
   );

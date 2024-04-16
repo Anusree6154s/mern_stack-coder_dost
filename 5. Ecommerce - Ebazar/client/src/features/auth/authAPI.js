@@ -1,7 +1,6 @@
 import { BASE_URL } from '../../app/constants';
 
 export function createUser(userData) {
-  console.log(userData)
   return new Promise(async (resolve) => {
     const response = await fetch(BASE_URL + '/auth/signup', {
       method: 'POST',
@@ -48,7 +47,6 @@ export function checkAuth() {
 
 export function sendOTP(item) {
   return new Promise(async (resolve, reject) => {
-    console.log(item)
     const response = await fetch(BASE_URL + '/auth/sendOTP', {
       method: 'POST',
       body: JSON.stringify(item),
@@ -56,7 +54,6 @@ export function sendOTP(item) {
     })
     if (response.ok) {
       const data = await response.json()
-      console.log("data: ", data)
       resolve({ data })
     } else {
       const error = await response.json();
@@ -67,7 +64,6 @@ export function sendOTP(item) {
 }
 
 export function resetPassword(item) {
-  console.log(item)
   return new Promise(async (resolve) => {
     const response = await fetch(BASE_URL + '/auth/resetpassword/' + item.userId, {
       method: 'PATCH',
@@ -80,7 +76,6 @@ export function resetPassword(item) {
 }
 
 export function updateUser(update) {
-  console.log("update: ", update)
   return new Promise(async (resolve) => {
     const response = await fetch(BASE_URL + '/users/user/' + update.id, {
       method: 'PATCH',
@@ -93,7 +88,13 @@ export function updateUser(update) {
 }
 
 export function signOut() {
-  return new Promise(async (resolve) => {
-    resolve({ data: 'success' });
+  return new Promise(async (resolve, reject) => {
+    const response = await fetch(BASE_URL + '/auth/logout')
+    if (response.ok) {
+      resolve({ data: "signout success" })
+    } else {
+      reject({ data: "signout error" })
+    }
+
   });
 }

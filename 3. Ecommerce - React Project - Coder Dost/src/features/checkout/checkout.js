@@ -5,7 +5,7 @@ import { deleteItemFromCartAsync, resetCartAsync, selectItems, updateCartAsync }
 import { useForm } from "react-hook-form"
 import { selectLoggedInUser, updateUserAsync } from "../auth/authSlice"
 import { useEffect, useState } from "react"
-import { createOrderAsync, makePaymentAsync, selectCurrentOrder } from "../orders/ordersSlice"
+import { createOrderAsync, selectCurrentOrder } from "../orders/ordersSlice"
 
 //TODO: clear cart items upon clicking order now
 //TODO: stock number change in server 

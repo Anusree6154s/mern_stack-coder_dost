@@ -36,8 +36,6 @@ function ForgotPassword() {
 
     const userId = useSelector(selectUserId)
 
-    console.log(OTP)
-
     return (
         <>
             <div
@@ -72,58 +70,56 @@ function ForgotPassword() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    {!showForm2 && !showForm3 && <form noValidate className="space-y-6" action="#" method="POST" onSubmit={handleSubmit(async (data) => {
-                        console.log(data)
-                        const otp = Math.floor(Math.random() * 9000 + 1000)
-                        if (otp) {
-                            setOTP(otp)
-                            dispatch(sendOTPAsync({ email: data.email, OTP: otp }))
-                        }
-                        setShowForm2(true)
-                        setShowAlert(true)
-                        setTimeout(() => setShowAlert(false), 3000)
-                    })}>
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300">
-                                Email
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="email"
-                                    {...register('email', {
-                                        required: 'Email is required',
-                                        pattern: {
-                                            value: /^\S+@\S+\.\S+$/,
-                                            message: 'Email not valid'
-                                        }
-                                    })}
-                                    type="email"
-                                    autoComplete="email"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-500 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue dark:focus:ring-blue-500 dark:bg-gray-800 sm:text-sm sm:leading-6"
-                                />
+                    {!showForm2 && !showForm3 &&
+                        <form noValidate className="space-y-6" action="#" method="POST" onSubmit={handleSubmit(async (data) => {
+                            const otp = Math.floor(Math.random() * 9000 + 1000)
+                            setShowForm2(true)
+                            setShowAlert(true)
+                            setTimeout(() => setShowAlert(false), 3000)
+                            if (otp) {
+                                setOTP(otp)
+                                dispatch(sendOTPAsync({ email: data.email, OTP: otp }))
+                            }
+                        })}>
+                            <div>
+                                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300">
+                                    Email
+                                </label>
+                                <div className="mt-2">
+                                    <input
+                                        id="email"
+                                        {...register('email', {
+                                            required: 'Email is required',
+                                            pattern: {
+                                                value: /^\S+@\S+\.\S+$/,
+                                                message: 'Email not valid'
+                                            }
+                                        })}
+                                        type="email"
+                                        autoComplete="email"
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 dark:ring-gray-500 dark:placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-customBlue dark:focus:ring-blue-500 dark:bg-gray-800 sm:text-sm sm:leading-6"
+                                    />
+                                </div>
+                                {errors.email && <p className="text-red-500">{errors.email.message}</p>}
                             </div>
-                            {errors.email && <p className="text-red-500">{errors.email.message}</p>}
-                        </div>
-                        <div>
-                            <button
-                                type="submit"
-                                className="flex w-full justify-center rounded-md bg-customBlue dark:bg-blue-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm bg-opacity-90 hover:bg-opacity-100 dark:hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-customBlue dark:focus-visible:outline-blue-700"
-                            >
-                                Send Email
-                            </button>
-                        </div>
-                    </form>}
+                            <div>
+                                <button
+                                    type="submit"
+                                    className="flex w-full justify-center rounded-md bg-customBlue dark:bg-blue-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm bg-opacity-90 hover:bg-opacity-100 dark:hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-customBlue dark:focus-visible:outline-blue-700"
+                                >
+                                    Send Email
+                                </button>
+                            </div>
+                        </form>
+                    }
 
                     {showForm2 && <>
                         <div onClick={() => setShowForm2(false)} className='cursor-pointer p-2 mb-5 inline-block rounded-md hover:bg-gray-50  dark:text-gray-300 dark:hover:bg-gray-700' ><ArrowLeftIcon className='h-6 w-6 inline-block '></ArrowLeftIcon> Back</div>
                         <form noValidate className="space-y-6" action="#" method="POST" onSubmit={handleSubmit2((data) => {
-                            console.log(data, OTP)
                             if (Number(data.otp) === OTP) {
-                                console.log("yes")
                                 setShowForm2(false)
                                 setShowForm3(true)
                             } else {
-                                console.log("no")
                                 setShowAlert2(true)
                                 setTimeout(() => setShowAlert2(false), 3000)
                             }

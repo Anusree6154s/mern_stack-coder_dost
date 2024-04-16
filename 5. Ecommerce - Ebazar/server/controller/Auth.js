@@ -49,7 +49,7 @@ exports.createUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
-  console.log("req.user: ", req.user)
+  // console.log("req.user: ", req.user)
   try {
     res
       .cookie("jwt", req.user.token, {
@@ -63,8 +63,20 @@ exports.loginUser = async (req, res) => {
   }
 };
 
+exports.logoutUser = async (req, res) => {
+  const token = jwt.sign({ id: null }, secretKey)
+  console.log("logout jwt x sent")
+  res
+    .cookie("jwt", 'x', {
+      expires: new Date(Date.now() + 3600000),
+      httpOnly: true,
+    })
+    .status(201)
+    .json({ id: null })
+};
+
 exports.checkAuth = async (req, res) => {
-  console.log("req.user: ", req.user)
+  console.log("checkAuth req.user: ", req.user)
   console.log("yes")
   if (req.user) {
     console.log("yes")
@@ -95,8 +107,8 @@ function sendEmail({ email, OTP, id }) {
     var transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.SENDERS_EMAIL,
-        pass: process.env.SENDERS_GMAIL_APP_PASSWORD, //specifically made using App Passwors od gmail
+        user: process.env.SENDERS_EMAIL2,
+        pass: process.env.SENDERS_GMAIL_APP_PASSWORD2, //specifically made using App Passwors od gmail
       },
     });
 
@@ -158,7 +170,7 @@ exports.resetPassword = async (req, res) => {
       async function (err, hashedPassword) {
         const data = await User.findByIdAndUpdate(id, { password: hashedPassword, salt }, { new: true });
         if (data) {
-          console.log(data)
+          // console.log(data)
           res.send({ message: "Password has been reset" })
         } else {
           res.send({ err })

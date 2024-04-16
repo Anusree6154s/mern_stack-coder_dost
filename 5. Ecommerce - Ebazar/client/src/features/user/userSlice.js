@@ -35,7 +35,6 @@ export const userSlice = createSlice({
       .addCase(fetchLoggedInUserAsync.fulfilled, (state, action) => {
         state.status = 'idle';
         state.userInfo = action.payload;
-        console.log(action.payload)
       })
       .addCase(fetchLoggedInUserOrdersAsync.pending, (state) => {
         state.status = 'loading';

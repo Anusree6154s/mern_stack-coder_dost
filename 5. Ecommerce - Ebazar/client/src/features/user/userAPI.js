@@ -12,11 +12,9 @@ export function fetchLoggedInUser() {
 
 
 export function fetchLoggedInUserOrders(userId) {
-  console.log(userId)
   return new Promise(async (resolve) => {
     const response = await fetch(BASE_URL + '/orders?user=' + userId)
     const data = await response.json()
-    console.log(data)
     resolve({ data })
   }
   );

@@ -9,6 +9,7 @@ function LogOut() {
     useEffect(() => {
         dispatch(signOutsAsync())
     }, [])
+
     return (
         <>
             {!user && <Navigate to='/login' replace={true}></Navigate>}

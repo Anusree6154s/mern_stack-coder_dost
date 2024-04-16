@@ -9,9 +9,15 @@ function OrderSuccessPage() {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(resetOrder())
+        const searchParams = new URLSearchParams(window.location.search);
+        const redirectStatus = searchParams.get('redirect_status');
+        
+        console.log('Redirect Status:', redirectStatus);
+        console.log(params)
     }, [])
+   
     return (
-        <NavBar >
+        <NavBar>
             <div className="px-24 py-8 sm:py-24 lg:px-24 sm:px-6 ">
                 {!params.id && <Navigate to='/' replace={true}></Navigate>
                 }

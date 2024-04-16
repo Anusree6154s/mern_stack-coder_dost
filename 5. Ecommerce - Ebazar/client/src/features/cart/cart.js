@@ -14,7 +14,6 @@ function Cart() {
   const handleQuantity = (e, item) => {
     dispatch(updateCartAsync({ ...item, product: item.product.id, quantity: +e.target.value }))
   }
-
   const handleDelete = (item) => {
     dispatch(deleteItemFromCartAsync(item.id))
   }

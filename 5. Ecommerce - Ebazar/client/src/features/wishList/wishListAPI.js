@@ -2,7 +2,6 @@ import { BASE_URL } from '../../app/constants';
 
 
 export function addToWishList(item) {
-  console.log(item)
   return new Promise(async (resolve) => {
     const response = await fetch(BASE_URL + '/wishlist', {
       method: 'POST',
@@ -10,7 +9,6 @@ export function addToWishList(item) {
       headers: { 'content-type': 'application/json' }
     });
     const data = await response.json();
-    console.log(data)
     resolve({ data });
   });
 }

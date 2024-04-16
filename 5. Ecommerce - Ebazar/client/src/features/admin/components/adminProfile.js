@@ -22,7 +22,7 @@ function AdminProfile() {
     const [addFormVisibility, setaddFormVisibility] = useState(false)
 
     const handleAdd = (data) => {
-        if (data.image2) {
+        if (data.image2.length!==0) {
             const reader = new FileReader();
             reader.onload = (e) => {
                 dispatch(updateUserAsync({
@@ -64,7 +64,6 @@ function AdminProfile() {
 
 
     }
-    console.log(user)
 
     return (
         <>

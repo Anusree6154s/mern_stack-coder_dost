@@ -19,6 +19,7 @@ function ProductDetail() {
     const params = useParams()
 
     const [showAlert, setShowAlert] = useState(null)
+    const [quantity, setQuantity] = useState(0)
 
     const wishList = useSelector(selectWishList)
     const cartItems = useSelector(selectItems)
@@ -30,6 +31,11 @@ function ProductDetail() {
     useEffect(() => {
         dispatch(resetNewProduct())
     }, [])
+
+
+    const handleQuantity = (e) => {
+        setQuantity(+e.target.value)
+    }
 
     const handleWishList = () => {
         const productExistsInWishlist = wishList.some(item => item.product.title === product.title);
@@ -47,19 +53,20 @@ function ProductDetail() {
             }, 2000);
         }
     }
-    console.log(cartItems)
+
     const handleAdd = () => {
         const productInCart = cartItems.find(item => item.product.title === product.title);
 
         if (product.stock !== 0) {
             if (productInCart) {
-                dispatch(updateCartAsync({ ...productInCart, product:productInCart.product.id , quantity: productInCart.quantity + 1 }))
+                const newQuantity = productInCart.quantity + quantity <= 4 ? productInCart.quantity + quantity : productInCart.quantity
+                dispatch(updateCartAsync({ ...productInCart, product: productInCart.product.id, quantity: newQuantity }))
                 setShowAlert('cart')
                 setTimeout(() => {
                     setShowAlert(null)
                 }, 2000)
             } else {
-                dispatch(addToCartAsync({ product: product.id, quantity: 1, user: user.id }))
+                dispatch(addToCartAsync({ product: product.id, quantity: quantity, user: user.id }))
                 setShowAlert('cart')
                 setTimeout(() => {
                     setShowAlert(null)
@@ -71,7 +78,7 @@ function ProductDetail() {
 
     const handleBuy = () => {
         if (product.stock !== 0) {
-            dispatch(addToCartAsync({ product: product.id, quantity: 1, user: user.id }))
+            dispatch(addToCartAsync({ product: product.id, quantity: quantity, user: user.id }))
         }
     }
 
@@ -191,12 +198,13 @@ function ProductDetail() {
 
                             <div className='mt-12'>
                                 <label className='text-sm font-medium dark:text-gray-300'>Quantity:</label>
-                                <select name="Quantity" id="quantity" className='border border-gray-300  dark:border-gray-500 dark:bg-gray-800 dark:text-gray-300 rounded-md pt-0 pb-0 ml-4'>
+                                <select onChange={(e) => handleQuantity(e)}
+                                    // value={product.quantity || 1} 
+                                    name="Quantity" id="quantity" className='border border-gray-300  dark:border-gray-500 dark:bg-gray-800 dark:text-gray-300 rounded-md pt-0 pb-0 ml-4'>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
-                                    <option value="5">5</option>
                                 </select>
                             </div>
 
