@@ -9,9 +9,19 @@ exports.santizeUser = user => {
 }
 
 exports.cookieExtractor = (req) => {
-    let token = null;
-    if (req && req.cookies) {
-        token = req.cookies["jwt"];
+    // let token = null;
+    // if (req && req.cookies) {
+    //     token = req.cookies["jwt"];
+    // }
+
+    let token = '';
+    let i = 0;
+    let cookieName = `jwt_${i}`;
+    while (req && req.cookies[cookieName]) {
+        token += req.cookies[cookieName];
+        i++;
+        cookieName = `jwt_${i}`;
     }
+
     return token;
 }

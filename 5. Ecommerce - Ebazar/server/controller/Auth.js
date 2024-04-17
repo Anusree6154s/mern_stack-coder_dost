@@ -50,12 +50,28 @@ exports.createUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   try {
-    res
-      .cookie("jwt", req.user.token, {
-        expires: new Date(Date.now() + 3600000),
+    // res
+    //   .cookie("jwt", req.user.token, {
+    //     expires: new Date(Date.now() + 3600000),
+    //     httpOnly: true,
+    //   })
+    //   .status(201)
+    //   .json(req.user.info);
+
+
+    const chunkSize = 3000; 
+    const numChunks = Math.ceil(jwtToken.length / chunkSize);
+    for (let i = 0; i < numChunks; i++) {
+      const cookieName = `jwt_${i}`;
+      const startIndex = i * chunkSize;
+      const endIndex = Math.min(startIndex + chunkSize, jwtToken.length);
+      const tokenChunk = jwtToken.substring(startIndex, endIndex);
+      res.cookie(cookieName, tokenChunk, {
         httpOnly: true,
+        expires: new Date(Date.now() + 3600000)
       })
-      .status(201)
+    }
+    res.status(201)
       .json(req.user.info);
   } catch (error) {
     res.status(400).json(error);
@@ -71,6 +87,8 @@ exports.logoutUser = async (req, res) => {
     })
     .status(201)
     .json({ id: null })
+
+
 };
 
 exports.checkAuth = async (req, res) => {
