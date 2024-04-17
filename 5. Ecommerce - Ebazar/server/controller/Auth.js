@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { User } = require("../model/User.js");
 const nodemailer = require("nodemailer");
+const zlib = require('zlib');
 
 // imports related to passport crypto authentication
 const crypto = require("crypto");
@@ -50,29 +51,14 @@ exports.createUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   try {
-    // res
-    //   .cookie("jwt", req.user.token, {
-    //     expires: new Date(Date.now() + 3600000),
-    //     httpOnly: true,
-    //   })
-    //   .status(201)
-    //   .json(req.user.info);
-
-
-    const chunkSize = 3000; 
-    const numChunks = Math.ceil(jwtToken.length / chunkSize);
-    for (let i = 0; i < numChunks; i++) {
-      const cookieName = `jwt_${i}`;
-      const startIndex = i * chunkSize;
-      const endIndex = Math.min(startIndex + chunkSize, jwtToken.length);
-      const tokenChunk = jwtToken.substring(startIndex, endIndex);
-      res.cookie(cookieName, tokenChunk, {
+    res
+      .cookie("jwt", req.user.token, {
+        expires: new Date(Date.now() + 3600000),
         httpOnly: true,
-        expires: new Date(Date.now() + 3600000)
       })
-    }
-    res.status(201)
+      .status(201)
       .json(req.user.info);
+
   } catch (error) {
     res.status(400).json(error);
   }

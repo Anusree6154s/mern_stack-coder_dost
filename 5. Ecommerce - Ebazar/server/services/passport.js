@@ -42,7 +42,7 @@ passport.use('local', new LocalStrategy(
                 if (!crypto.timingSafeEqual(user.password, hashedPassword)) {
                     done(null, false, { message: 'Invalid credentials' })
                 } else {
-                    const token = jwt.sign(santizeUser(user), secretKey);
+                    const token = jwt.sign({ id: user._id }, secretKey);
                     return done(null, { info: santizeUser(user), token: token }) //this line sends to serializer
                 }
             });
@@ -58,7 +58,6 @@ passport.use('jwt', new JwtStrategy(opts, async function (jwt_payload, done) {
     if (jwt_payload.id !== null) {
         user = await User.findOne({ _id: jwt_payload.id });
     }
-
     try {
         if (user) {
             return done(null, santizeUser(user)); //this calls serializer
