@@ -41,14 +41,13 @@
 >    - _a VS Code Extension_
 >    - _To reload console without running `node index`_
 
-#### 1. JavaScript Data types
-
-##### 1. Variable Constants and comments 
-- var - Redeclarable, reassignable (Global Scope)
-- let - reassignable, NOT redeclarable (Block Scope)
-- const - NOT redeclarable, NOT reassignable
-##### 2. Data types (& types)
-- Number, String, Boolean, Null, undefined. Object, Symbol
+ 1. JavaScript Data types
+    1. Variable Constants and comments 
+        - var - Redeclarable, reassignable (Global Scope)
+        - let - reassignable, NOT redeclarable (Block Scope)
+        - const - NOT redeclarable, NOT reassignable
+    2. Data types (& types)
+        - Number, String, Boolean, Null, undefined. Object, Symbol
 ##### 3. Strings
 ##### 4. Numbers
 ##### 5. Type conversion
