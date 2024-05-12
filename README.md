@@ -25,7 +25,7 @@
       11. [Async JS](#11-async-js)
       12. [ES6](#12-es6-features)
       13. [Misc Tools](#13-misc-tools)
-   2. Advanced
+   2. [Advanced](#2-advanced-javascript)
       1. [Scope and Closure](#1-scope-and-closure)
       2. [Objects](#2-objects)
       3. [Function](#3-function)
@@ -34,7 +34,7 @@
       6. [Class](#6-class)
       7. [Async JS](#7-async-js)
 
-4. NodeJS
+4. [NodeJS](#4-node-js)
 
 ## 1. React
 
