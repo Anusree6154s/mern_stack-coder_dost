@@ -26,13 +26,13 @@
       12. [ES6](#12-es6-features)
       13. [Misc Tools](#13-misc-tools)
    2. Advanced
-      1. Scope and Closure
-      2. Objects
-      3. Function
-      4. Iterables, Generators
-      5. Prototypes
-      6. Class
-      7. Async JS
+      1. [Scope and Closure](#1-scope-and-closure)
+      2. [Objects](#2-objects)
+      3. [Function](#3-function)
+      4. [Iterables, Generators](#4-iterables-generators)
+      5. [Prototypes](#5-prototypes)
+      6. [Class](#6-class)
+      7. [Async JS](#7-async-js)
 
 4. NodeJS
 
