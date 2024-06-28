@@ -1,0 +1,43 @@
+.App {
+  text-align: center;
+}
+
+div {
+  padding: 10px;
+}
+
+select {
+  padding: 2px 5px;
+  margin-right: 10px;
+  font-size: large;
+}
+
+label {
+  margin-right: 5px;
+}
+
+textarea {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 2px lightpink solid;
+  color: darksalmon;
+  font-size: large;
+}
+
+body {
+  background-color: lightyellow;
+  font-size: large;
+}
+
+button {
+  margin-top: 10px;
+  background-color: lightcyan;
+  border: 2px lightsteelblue solid;
+  padding: 5px 8px;
+  font-size: large;
+}
+
+#to {
+  color: black;
+  border: 2px solid transparent;
+}
